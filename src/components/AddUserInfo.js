@@ -6,8 +6,9 @@ class AddUserInfo extends React.Component {
         age: 22
     }
     Handle_onClick = (event) => {
+        event.preventDefault();
         this.props.addUser({
-            id: 10,
+            id: 101,
             name: 'Nguyễn Anh Đức',
             age: 21
         });
@@ -16,7 +17,7 @@ class AddUserInfo extends React.Component {
     Handle_Home = (event) => {
         event.preventDefault();
         this.props.addUser({
-            id: 11,
+            id: 111,
             name: this.state.name,
             age: this.state.age
         })
@@ -39,12 +40,14 @@ class AddUserInfo extends React.Component {
 
             <div>
                 Tôi tên là {this.state.name}, {this.state.age} tuổi
+                <form>
+                    < button onClick={this.Handle_onClick} > BUTTON</button >
 
-                < button onClick={this.Handle_onClick} > BUTTON</button >
+                </form>
                 <form onSubmit={this.Handle_Home}>
                     <input type="text" onChange={this.Handle_Input_Name} /><br />
                     <input type="text" onChange={this.Handle_Input_Age} />
-                    <button>Submit</button>
+                    <button type="submit">Submit</button>
                 </form>
                 <br />
             </div >

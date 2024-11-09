@@ -1,6 +1,8 @@
 import React from "react";
 import ListUsers from "./ListUsers"
 import AddUserInfo from "./AddUserInfo";
+import a from "../logo.svg"
+import "./ListUsers.scss"
 class MyComponent extends React.Component {
 
     state = {
@@ -19,12 +21,24 @@ class MyComponent extends React.Component {
         })
     }
 
+    Handle_DeleteUser = (id_User) => {
+        let listUserNew = [...this.state.listUser];
+        listUserNew = listUserNew.filter(item =>
+            item.id !== id_User
+        )
+        this.setState({
+            listUser: listUserNew
+        })
+        alert("delete user: ", id_User)
+    }
+
     render() {
 
         return (
-            <div>
+            <div className="MainComponent">
+                <img src={a} />
                 <AddUserInfo addUser={this.Handle_AddNewUser} />
-                <ListUsers listUser={this.state.listUser} />
+                <ListUsers listUser={this.state.listUser} deleteUser={this.Handle_DeleteUser} />
             </div>
 
         )

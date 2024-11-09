@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
-import './App.css';
+import './App.scss';
 import MyComponent from './components/MyComponent';
 import React from 'react';
 
