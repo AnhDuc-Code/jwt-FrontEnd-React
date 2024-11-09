@@ -32,6 +32,16 @@ class MyComponent extends React.Component {
         alert("delete user: ", id_User)
     }
 
+    componentDidMount = () => {
+        console.log("didMount")
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState !== this.state) {
+            console.log("didUpdate")
+        }
+    }
+
     render() {
 
         return (

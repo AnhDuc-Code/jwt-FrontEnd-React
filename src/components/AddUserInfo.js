@@ -1,9 +1,12 @@
 import React from "react";
 class AddUserInfo extends React.Component {
-    state = {
-        id: 1,
-        name: 'Duc1',
-        age: 22
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: 1,
+            name: 'Duc1',
+            age: 22
+        }
     }
     Handle_onClick = (event) => {
         event.preventDefault();
