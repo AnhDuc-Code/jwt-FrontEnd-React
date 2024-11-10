@@ -1,60 +1,51 @@
-import React from "react";
-class AddUserInfo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: 1,
-            name: 'Duc1',
-            age: 22
-        }
-    }
-    Handle_onClick = (event) => {
+import React, { useState } from "react";
+
+
+const AddUserInfo = (props) => {
+
+    const [id, setId] = useState(1);
+    const [name, setName] = useState("Nguyễn A");
+    const [age, setAge] = useState(13);
+    const Handle_onClick = (event) => {
         event.preventDefault();
-        this.props.addUser({
+        props.addUser({
             id: 101,
-            name: 'Nguyễn Anh Đức',
-            age: 21
+            name: setName('Nguyễn Anh Đức'),
+            age: setAge(13)
         });
     }
 
-    Handle_Home = (event) => {
+    const Handle_Home = (event) => {
         event.preventDefault();
-        this.props.addUser({
+        props.addUser({
             id: 111,
-            name: this.state.name,
-            age: this.state.age
+            name: name,
+            age: age
         })
-        console.log('check state in AddUserInfo: ', this.state);
+        console.log('check state in AddUserInfo: ', id, name, age);
     }
 
-    Handle_Input_Name = (event) => {
-        this.setState({
-            name: event.target.value
-        })
+    const Handle_Input_Name = (event) => {
+        setName(event.target.value);
     }
-    Handle_Input_Age = (event) => {
-        this.setState({
-            age: event.target.value
-        })
+    const Handle_Input_Age = (event) => {
+        setAge(event.target.value);
     }
+    return (
 
-    render() {
-        return (
-
-            <div>
-                Tôi tên là {this.state.name}, {this.state.age} tuổi
-                <form>
-                    < button onClick={this.Handle_onClick} > BUTTON</button >
-
-                </form>
-                <form onSubmit={this.Handle_Home}>
-                    <input type="text" onChange={this.Handle_Input_Name} /><br />
-                    <input type="text" onChange={this.Handle_Input_Age} />
-                    <button type="submit">Submit</button>
-                </form>
-                <br />
-            </div >
-        )
-    }
+        <div>
+            Tôi tên là {name}, {age} tuổi
+            <form>
+                <button onClick={Handle_onClick}>BUTTON</button>
+            </form>
+            <form onSubmit={Handle_Home}>
+                <input type="text" onChange={Handle_Input_Name} /><br />
+                <input type="text" onChange={Handle_Input_Age} />
+                <button type="submit">Submit</button>
+            </form>
+            <br />
+        </div >
+    )
 }
+
 export default AddUserInfo;

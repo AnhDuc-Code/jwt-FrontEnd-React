@@ -1,58 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import ListUsers from "./ListUsers"
 import AddUserInfo from "./AddUserInfo";
 import a from "../logo.svg"
 import "./ListUsers.scss"
-class MyComponent extends React.Component {
 
-    state = {
-        listUser: [
+const MyComponent = () => {
+    const [listUsers, setListUsers] = useState(
+        [
             { id: 1, name: 'a', age: 12 },
             { id: 2, name: 'b', age: 13 },
             { id: 3, name: 'c', age: 19 }
 
         ]
+    );
+
+    const Handle_AddNewUser = (user) => {
+        console.log('check MyComponent có gì truyền lên AddUser ', user);
+        setListUsers(
+            [user, ...listUsers]
+        )
     }
 
-    Handle_AddNewUser = (user) => {
-        console.log(user);
-        this.setState({
-            listUser: [user, ...this.state.listUser]
-        })
-    }
-
-    Handle_DeleteUser = (id_User) => {
-        let listUserNew = [...this.state.listUser];
-        listUserNew = listUserNew.filter(item =>
+    const Handle_DeleteUser = (id_User) => {
+        let listUsersNew = [...listUsers];
+        listUsersNew = listUsersNew.filter(item =>
             item.id !== id_User
         )
-        this.setState({
-            listUser: listUserNew
-        })
+        setListUsers(
+            listUsersNew
+        )
         alert("delete user: ", id_User)
     }
 
-    componentDidMount = () => {
+    const componentDidMount = () => {
         console.log("didMount")
     }
 
-    componentDidUpdate = (prevProps, prevState) => {
-        if (prevState !== this.state) {
-            console.log("didUpdate")
-        }
-    }
+    // componentDidUpdate = (prevProps, prevState) => {
+    //     if (prevState !== state) {
+    //         console.log("didUpdate")
+    //     }
+    // }
 
-    render() {
 
-        return (
-            <div className="MainComponent">
-                <img src={a} />
-                <AddUserInfo addUser={this.Handle_AddNewUser} />
-                <ListUsers listUser={this.state.listUser} deleteUser={this.Handle_DeleteUser} />
-            </div>
 
-        )
-    }
+    return (
+        <div className="MainComponent">
+            <img src={a} />
+            <AddUserInfo addUser={Handle_AddNewUser} />
+            <ListUsers listUsers={listUsers} deleteUser={Handle_DeleteUser} />
+        </div>
+
+    )
+
 
 }
 export default MyComponent;
