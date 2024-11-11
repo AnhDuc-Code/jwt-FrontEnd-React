@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListUsers from "./ListUsers"
 import AddUserInfo from "./AddUserInfo";
 import a from "../logo.svg"
@@ -29,24 +29,26 @@ const MyComponent = () => {
         setListUsers(
             listUsersNew
         )
-        alert("delete user: ", id_User)
     }
 
-    const componentDidMount = () => {
-        console.log("didMount")
-    }
+    useEffect(() => {
+        console.log("useEffect as didMount")
+    }, []
+    )
 
-    // componentDidUpdate = (prevProps, prevState) => {
-    //     if (prevState !== state) {
-    //         console.log("didUpdate")
-    //     }
-    // }
+    useEffect(() => {
+        console.log("useEffect as didUpdate")
+        if (listUsers.length === 0) {
+            alert("Deleted All")
+        }
+    }, [listUsers]
+    )
 
 
 
     return (
         <div className="MainComponent">
-            <img src={a} />
+            <img src={a} alt="Ảnh a" />
             <AddUserInfo addUser={Handle_AddNewUser} />
             <ListUsers listUsers={listUsers} deleteUser={Handle_DeleteUser} />
         </div>
