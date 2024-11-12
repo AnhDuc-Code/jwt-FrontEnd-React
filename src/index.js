@@ -5,14 +5,53 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Admin from './components/Admin/Admin';
+import User from './components/User/User';
+import Home from './components/Home/Home'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "home",
+        element: <Home />
+      },
+      {
+        path: "admin",
+        element: <Admin />
+      },
+      {
+        path: "user",
+        element: <User />
+      },
+    ], future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+    },
+  }
+
+]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <App />
-    {/* </React.StrictMode> */}
-  </Provider>
+  <RouterProvider router={router} />
+
+  // <Provider store={store}>
+  //   {/* <React.StrictMode> */}
+  //   <App />
+  //   {/* </React.StrictMode> */}
+  // </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
