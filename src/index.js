@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import store from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
@@ -11,7 +9,7 @@ import {
 } from "react-router-dom";
 import Admin from './components/Admin/Admin';
 import User from './components/User/User';
-import Home from './components/Home/Home'
+import HomePage from './components/Home/HomePage'
 
 const router = createBrowserRouter([
   {
@@ -19,8 +17,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "home",
-        element: <Home />
+        index: true,
+        element: <HomePage />
       },
       {
         path: "admin",
@@ -30,6 +28,10 @@ const router = createBrowserRouter([
         path: "user",
         element: <User />
       },
+      {
+        path: "*",
+        element: "404 not found!!!"
+      }
     ], future: {
       v7_startTransition: true,
       v7_relativeSplatPath: true,

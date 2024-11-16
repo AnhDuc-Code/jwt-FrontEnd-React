@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,20 +10,24 @@ const Home = () => {
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#home">My App</Navbar.Brand>
+                    <Navbar.Brand as={NavLink} to="/">My App</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="home">Home</Nav.Link>
-                            <Nav.Link href="admin">Admin</Nav.Link>
-                            <Nav.Link href="user">Users</Nav.Link>
+                            <NavLink to="" className='nav-link'>Home</NavLink>
+                            <NavLink to="admin" className='nav-link'>Admin</NavLink>
+                            <NavLink to="user" className='nav-link'>Users</NavLink>
                         </Nav>
                         <Nav>
-                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                            <span>
+                                <button className='btn-login'>Login</button>
+                                <button className='btn-signup'>Signup</button>
+                            </span>
+                            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="">Login</NavDropdown.Item>
                                 <NavDropdown.Item href="">Profile</NavDropdown.Item>
                                 <NavDropdown.Item href="">Logout</NavDropdown.Item>
-                            </NavDropdown>
+                            </NavDropdown> */}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
