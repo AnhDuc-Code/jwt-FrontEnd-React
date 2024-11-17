@@ -1,11 +1,16 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
 
 const Home = () => {
+    let navigate = useNavigate();
+    const handleGetLoginPage = () => {
+        navigate("login");
+    }
+    const handleGetSignupPage = () => {
+        navigate("signup");
+    }
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -20,14 +25,11 @@ const Home = () => {
                         </Nav>
                         <Nav>
                             <span>
-                                <button className='btn-login'>Login</button>
-                                <button className='btn-signup'>Signup</button>
+                                <button className='btn-login' onClick={() => handleGetLoginPage()}>
+                                    Login
+                                </button>
+                                <button className='btn-signup' onClick={() => handleGetSignupPage()}>Signup</button>
                             </span>
-                            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="">Login</NavDropdown.Item>
-                                <NavDropdown.Item href="">Profile</NavDropdown.Item>
-                                <NavDropdown.Item href="">Logout</NavDropdown.Item>
-                            </NavDropdown> */}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

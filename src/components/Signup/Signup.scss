@@ -1,0 +1,33 @@
+@media (max-width: 500px) {
+    .Signup-container {
+        .left-content {
+            display: none;
+
+        }
+    }
+}
+
+.Signup-container {
+    display: flex;
+    margin-top: 10vh;
+    gap: 5vw;
+
+    .left-content {
+        display: flex;
+        flex-grow: 7;
+        border: 1px solid red;
+        padding: 10px;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .right-content {
+        flex-grow: 5;
+        border: 1px solid rgb(134, 134, 134);
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 10%);
+        // text-align: center;
+
+    }
+}

@@ -1,0 +1,36 @@
+@media (max-width: 500px) {
+    .Login-container {
+        .left-content {
+            display: none;
+
+        }
+    }
+}
+
+.Login-container {
+    display: flex;
+    margin-top: 10vh;
+    gap: 5vw;
+
+    .left-content {
+        align-self: center;
+        flex-grow: 7;
+        border: 1px solid red;
+        padding: 10px;
+
+        h4 {
+            font-size: 30px;
+            color: rgb(0, 91, 209);
+        }
+    }
+
+    .right-content {
+        flex-grow: 5;
+        border: 1px solid rgb(134, 134, 134);
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 10%);
+        // text-align: center;
+
+    }
+}
