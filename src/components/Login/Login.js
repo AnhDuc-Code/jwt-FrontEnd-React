@@ -2,20 +2,65 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss"
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
+import { loginUser } from "../../ServiceAxios/userService"
 const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const validDefault = {
+        emailValid: true,
+        passwordValid: true
+    }
+    const [isValidLogin, setIsValidLogin] = useState(validDefault);
 
     let navigate = useNavigate();
     const handleGetSignupPage = () => {
         navigate("/signup")
     }
     useEffect(() => {
-        // axios.get("http://localhost:9000/").then((data) => {
-        //     console.log("lấy được thông tin nhân viên", data);
-        // })
+        axios.get("http://localhost:9000/api/").then((data) => {
+            console.log("lấy được thông tin nhân viên", data);
+        })
     }, [])
+
+    const isValid = () => {
+        setIsValidLogin({ ...validDefault });
+        if (!email) {
+            setIsValidLogin({ ...validDefault, emailValid: false })
+            toast.error("Bạn cần nhận Email");
+            return false;
+        }
+        // eslint-disable-next-line
+        let regx = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@[*[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+]*/g
+        if (!regx.test(email)) {
+            setIsValidLogin({
+                ...validDefault,
+                emailValid: false
+            })
+            toast.error("Bạn cần nhập định dạnh email");
+            return false;
+        }
+        if (!password) {
+            setIsValidLogin({ ...validDefault, passwordValid: false })
+            toast.error("Bạn cần nhận password");
+            return false;
+        }
+        return true;
+    }
+
+    const handleLogin = async () => {
+        console.log("handleLogin")
+        if (isValid() === true) {
+            let response = await loginUser(email, password);
+            let responseData = response.data;
+            if (+responseData.EC === 0) {
+                toast.success(responseData.EM);
+            } else {
+                toast.error(responseData.EM);
+            }
+        }
+    }
+
     return (
         <div className="container">
             <div className="Login-container">
@@ -29,9 +74,9 @@ const Login = () => {
                 </div>
                 <div className="right-content text-center" >
                     <h1 style={{ color: "#7777FF" }}>ĐĂNG NHẬP</h1>
-                    <input type="text" className="form-control mb-3" placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
-                    <input type="password" className="form-control mb-3" placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
-                    <button className="btn btn-primary ">Đăng Nhập</button>
+                    <input type="text" className={isValidLogin.emailValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
+                    <input type="password" className={isValidLogin.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
+                    <button className="btn btn-primary " onClick={() => { handleLogin() }}>Đăng Nhập</button>
                     <hr />
                     <ins>Quên mật khẩu?</ins><br />
                     <button className="btn btn-info mt-3" onClick={() => { handleGetSignupPage() }}>

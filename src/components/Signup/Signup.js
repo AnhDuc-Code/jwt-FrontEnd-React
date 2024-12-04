@@ -1,36 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Signup.scss"
 import { useState } from "react";
 import { toast } from 'react-toastify';
+import { createUser } from "../../ServiceAxios/userService";
+
 const Signup = () => {
     const [email, setEmail] = useState();
     const [username, setUsername] = useState();
     const [phone, setPhone] = useState();
     const [password, setPassword] = useState();
     const [reEnterPassword, setReEnterPassword] = useState();
-    const validDeFauld = {
+    const validDefault = {
         emailValid: true,
         usernameValid: true,
         phoneValid: true,
         passwordValid: true
     }
-    const [isValidObject, setIsValidObject] = useState(validDeFauld);
-
+    const [isValidObject, setIsValidObject] = useState(validDefault);
+    let navigate = useNavigate();
 
     const isValid = () => {
-        setIsValidObject(validDeFauld)
+        setIsValidObject(validDefault)
         if (!email) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 emailValid: false
             })
             toast.error("Bạn cần nhập Email");
             return false;
         }
+        // eslint-disable-next-line
         let regx = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@[*[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+]*/g
         if (!regx.test(email)) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 emailValid: false
             })
             toast.error("Bạn cần nhập định dạnh email");
@@ -38,7 +41,7 @@ const Signup = () => {
         }
         if (!username) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 usernameValid: false
             })
             toast.error("Bạn cần nhập Tên tài khoản");
@@ -46,7 +49,7 @@ const Signup = () => {
         }
         if (!phone) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 phoneValid: false
             })
             toast.error("Bạn cần nhập số điện thoại");
@@ -54,7 +57,7 @@ const Signup = () => {
         }
         if (!password) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 passwordValid: false
             })
             toast.error("Bạn cần nhập mật khẩu");
@@ -62,7 +65,7 @@ const Signup = () => {
         }
         if (password !== reEnterPassword) {
             setIsValidObject({
-                ...validDeFauld,
+                ...validDefault,
                 passwordValid: false
             })
             toast.error("Mật khẩu không giống nhau");
@@ -73,13 +76,20 @@ const Signup = () => {
         return true;
     }
     const handleSignup = async () => {
-        if (!isValid()) {
-            return;
+        if (isValid() === true) {
+            let response = await createUser(email, username, phone, password);
+            let responseData = response.data;
+            if (+responseData.EC === 0) {
+                toast.success(responseData.EM);
+                navigate("/login");
+            } else {
+                toast.error(responseData.EM);
+            }
         }
+        // await axios.post("http://localhost:9000/api/signup", { email, username, phone, password }).then((data) => {
+        //     console.log("Gửi thành công request và đã nhận lại", data);
+        // })
 
-        const userInfo = { email, username, phone, password, reEnterPassword };
-        console.log("checkUserInfo", userInfo);
-        alert("me")
     }
 
     return (
