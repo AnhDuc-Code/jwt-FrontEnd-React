@@ -18,9 +18,13 @@ const Login = () => {
         navigate("/signup")
     }
     useEffect(() => {
-        axios.get("http://localhost:9000/api/").then((data) => {
-            console.log("lấy được thông tin nhân viên", data);
-        })
+        // axios.get("http://localhost:9000/api/").then((data) => {
+        //     console.log("lấy được thông tin nhân viên", data);
+        // })
+        const checkSessionKey = sessionStorage.getItem("key");
+        if (checkSessionKey) {
+            navigate("/");
+        }
     }, [])
 
     const isValid = () => {
@@ -55,6 +59,12 @@ const Login = () => {
             let responseData = response.data;
             if (+responseData.EC === 0) {
                 toast.success(responseData.EM);
+                navigate("/user");
+                const keySession = {
+                    isAuthenticated: true,
+                    token: "fake token"
+                }
+                sessionStorage.setItem("key", JSON.stringify(keySession));
             } else {
                 toast.error(responseData.EM);
             }

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.scss"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { createUser } from "../../ServiceAxios/userService";
 
@@ -91,6 +91,13 @@ const Signup = () => {
         // })
 
     }
+
+    useEffect(() => {
+        const checkSessionKey = sessionStorage.getItem("key");
+        if (checkSessionKey) {
+            navigate("/");
+        }
+    }, [])
 
     return (
         <div className="container">
