@@ -16,7 +16,7 @@ const ModalUser = (props) => {
                 let data = res.data.DT;
                 await setDataRoles(data);
                 await props.handleOnchangeCreate({
-                    role: res.data.DT[0].roleName,
+                    role: res.data.DT[0].idRole,
                     gender: "-none-"
                 });
 
@@ -39,7 +39,7 @@ const ModalUser = (props) => {
                     <div className='modal-body row'>
                         <div className='form-group col-6'>
                             <label className={''}>Username(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "usename": event.target.value }) }} />
+                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "username": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Email(<span className='red'>*</span>)</label>
@@ -75,7 +75,7 @@ const ModalUser = (props) => {
                                 {dataRoles.length > 0 &&
                                     dataRoles.map((value, index) => {
                                         return (
-                                            <option key={index}>
+                                            <option key={index} value={value.idRole}>
                                                 {value.roleName}
                                             </option>
                                         )

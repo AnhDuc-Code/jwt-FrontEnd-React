@@ -16,6 +16,10 @@ const deleteUserWithId = async (user) => {
     return await axios.delete('http://localhost:9000/api/user/delete', { data: user });
 }
 
+const createFullUser = async (dataUserFull) => {
+    return await axios.post("http://localhost:9000/api/user/createFullUser", { dataUserFull });
+}
+
 const editUserWithId = (id, data) => {
     return axios.put("http://localhost:9000/api/user/update" + id.idUser, data);
 }
@@ -25,5 +29,5 @@ const readRoles = () => {
 }
 
 export {
-    createUser, loginUser, readUsers, readUsersWithPage, editUserWithId, deleteUserWithId, readRoles
+    createUser, loginUser, readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles
 }

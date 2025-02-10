@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { readUsers, readUsersWithPage, editUserWithId, deleteUserWithId } from "../../ServiceAxios/userService";
+import { readUsers, readUsersWithPage, editUserWithId, deleteUserWithId, createFullUser } from "../../ServiceAxios/userService";
 import "./User.scss"
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ const User = () => {
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [dataItem, setDataItem] = useState({});
     const defaultData = {
-        usename: "", email: "", phone: "", gender: "", password: "", role: ""
+        username: "", email: "", phone: "", gender: "", password: "", role: ""
     }
     const [dataCreateUser, setDataCreateUser] = useState(defaultData);
 
@@ -23,6 +23,8 @@ const User = () => {
         setShowModal(false);
         setShowModalCreate(false);
         setDataItem({});
+        setDataCreateUser(defaultData);
+
     }
 
     useEffect(() => {
@@ -73,8 +75,18 @@ const User = () => {
         setShowModalCreate(true);
     }
 
-    const handleCreateFullUser = () => {
-        console.log(dataCreateUser);
+    const handleCreateFullUser = async () => {
+        console.log("thông tin sẽ gửi...", dataCreateUser);
+        let response = await createFullUser(dataCreateUser);
+        if (response && response.data.EC === 0) {
+            console.log(response);
+            toast.success(response.data.EM);
+            handleClose();
+            getUsers();
+        }
+        else {
+            toast.error(response.data.EM);
+        }
     }
 
     //Delete
