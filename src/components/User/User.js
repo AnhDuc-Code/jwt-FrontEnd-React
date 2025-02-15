@@ -3,7 +3,7 @@ import { readUsers, readUsersWithPage, editUserWithId, deleteUserWithId, createF
 import "./User.scss"
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
-import ModalDelete from './Modal';
+import ModalDelete from './ModalDelete';
 import ModalUser from './modalUser'
 
 const User = () => {
@@ -11,6 +11,7 @@ const User = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(10);
 
+    const [action, setAction] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [dataItem, setDataItem] = useState({});
@@ -18,12 +19,14 @@ const User = () => {
         username: "", email: "", phone: "", gender: "", password: "", role: ""
     }
     const [dataCreateUser, setDataCreateUser] = useState(defaultData);
+    const [dataUpdateUser, setDataUpdateUser] = useState(defaultData);
 
     const handleClose = () => {
         setShowModal(false);
         setShowModalCreate(false);
         setDataItem({});
         setDataCreateUser(defaultData);
+        setDataUpdateUser(defaultData);
 
     }
 
@@ -55,25 +58,20 @@ const User = () => {
     const changePage = (page) => {
         setCurrentPage(page);
     }
-    const editUser = async (item) => {
-        let response = await editUserWithId(item.item, { data1: 1 });
-        console.log("check responce", response);
-        if (response && response.data.EC === 0) {
-            toast.success(response.data.EM);
-            getUsers();
+
+
+    //create
+    const handleOnchangeDataUser = async (ob) => {
+        if (action === "CREATE") {
+            await setDataCreateUser({ ...dataCreateUser, ...ob })
         } else {
-            toast.error(response.data.EM);
+            await setDataUpdateUser({ ...dataUpdateUser, ...ob })
         }
     }
 
-    //create
-    const handleOnchangeCreate = async (ob) => {
-        await setDataCreateUser({ ...dataCreateUser, ...ob })
-    }
-
-    const createUser = async () => {
-        setShowModalCreate(true);
-    }
+    // const enableModalUser = async () => {
+    //     setShowModalCreate(true);
+    // }
 
     const handleCreateFullUser = async () => {
         console.log("thông tin sẽ gửi...", dataCreateUser);
@@ -89,6 +87,21 @@ const User = () => {
         }
     }
 
+    //Update
+    const handleEditUser = async () => {
+        try {
+            let response = await editUserWithId(dataUpdateUser);
+            console.log("check responce", response);
+            if (response && response.data.EC === 0) {
+                toast.success(response.data.EM);
+                getUsers();
+            } else {
+                toast.error(response.data.EM);
+            }
+        } catch (error) {
+            console.log('lỗi React Edit Function', error)
+        }
+    }
     //Delete
     const confirmDeleteUser = async () => {
         let response = await deleteUserWithId(dataItem.item);
@@ -105,11 +118,16 @@ const User = () => {
         setDataItem(item);
         setShowModal(true);
     }
+
+
+    const emptyFunc = () => {
+    }
+
     return (
         <>
             <div className="User-container container">
                 <div>
-                    <button className="btn btn-primary my-3" onClick={createUser}>
+                    <button className="btn btn-primary my-3" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>
                         Add New User
                     </button>
                 </div>
@@ -136,7 +154,14 @@ const User = () => {
                                                 <td style={{ flex: 3 }}>{item.address}</td>
                                                 <td style={{ flex: 2 }}>{item.phone}</td>
                                                 <td style={{ flex: 2 }}>{item.Role ? item.Role.roleName : "null"}</td>
-                                                <td style={{ flex: 2 }}> <button className="btn btn-warning me-2" onClick={() => editUser({ item })}>Edit</button><button className="btn btn-danger" onClick={() => deleteUser({ item })}>Delete</button></td>
+                                                <td style={{ flex: 2 }}>
+                                                    <button className="btn btn-warning me-2" onClick={() => {
+                                                        setShowModalCreate(true);
+                                                        setAction("UPDATE");
+                                                        setDataUpdateUser(item);
+                                                    }}>Edit</button>
+                                                    <button className="btn btn-danger" onClick={() => deleteUser({ item })}>Delete</button>
+                                                </td>
                                             </tr>
                                         )
 
@@ -170,7 +195,10 @@ const User = () => {
                 </span>
             </div >
             <ModalDelete show={showModal} handleClose={handleClose} confirmDeleteUser={confirmDeleteUser} />
-            <ModalUser show={showModalCreate} handleClose={handleClose} handleCreateFullUser={handleCreateFullUser} handleOnchangeCreate={handleOnchangeCreate} />
+            <ModalUser action={action} show={showModalCreate} handleClose={handleClose}
+                handleCreateFullUser={handleCreateFullUser} handleOnchangeDataUser={handleOnchangeDataUser}
+                handleEditUser={handleEditUser} dataUpdateUser={dataUpdateUser} showModalCreate={showModalCreate}
+            />
         </>
     )
 }

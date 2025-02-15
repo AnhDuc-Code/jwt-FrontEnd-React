@@ -72,7 +72,7 @@ const Login = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container" >
             <div className="Login-container">
                 <div className="left-content">
                     <h4>Dự án Phân quyền JWT</h4>
@@ -83,15 +83,25 @@ const Login = () => {
                     </p>
                 </div>
                 <div className="right-content text-center" >
-                    <h1 style={{ color: "#7777FF" }}>ĐĂNG NHẬP</h1>
-                    <input type="text" className={isValidLogin.emailValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
-                    <input type="password" className={isValidLogin.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
-                    <button className="btn btn-primary " onClick={() => { handleLogin() }}>Đăng Nhập</button>
-                    <hr />
-                    <ins>Quên mật khẩu?</ins><br />
-                    <button className="btn btn-info mt-3" onClick={() => { handleGetSignupPage() }}>
-                        Đăng ký
-                    </button>
+                    <form className="form-submitLogin" onSubmit={() => { handleLogin() }}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                                event.preventDefault();
+                                handleLogin();
+                            }
+                        }}
+                    >
+                        <h1 style={{ color: "#7777FF" }}>ĐĂNG NHẬP</h1>
+                        <input type="text" className={isValidLogin.emailValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
+                        <input type="password" className={isValidLogin.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
+                        <button className="btn btn-primary " type="submit"
+                        >Đăng Nhập</button>
+                        <hr />
+                        <ins>Quên mật khẩu?</ins><br />
+                        <button className="btn btn-info mt-3" onClick={() => { handleGetSignupPage() }} >
+                            Đăng ký
+                        </button>
+                    </form>
                 </div>
 
             </div>

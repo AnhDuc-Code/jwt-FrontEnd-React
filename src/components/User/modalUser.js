@@ -7,7 +7,8 @@ const ModalUser = (props) => {
     const [dataRoles, setDataRoles] = useState([]);
     useEffect(() => {
         getRoles();
-    }, []
+        console.log("check dataUpdateUser", props.dataUpdateUser);
+    }, [props.showModalCreate]
     )
     const getRoles = async () => {
         try {
@@ -15,7 +16,7 @@ const ModalUser = (props) => {
             if (res.data.EC === 0) {
                 let data = res.data.DT;
                 await setDataRoles(data);
-                await props.handleOnchangeCreate({
+                await props.handleOnchangeDataUser({
                     role: res.data.DT[0].idRole,
                     gender: "-none-"
                 });
@@ -32,26 +33,26 @@ const ModalUser = (props) => {
             <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.show} >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modalUser-title">
-                        {/* {props.titleModal} */}
+                        {props.action === "CREATE" ? "CREATE NEW USER" : "UPDATE USER"}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='modal-body row'>
                         <div className='form-group col-6'>
                             <label className={''}>Username(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "username": event.target.value }) }} />
+                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "username": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Email(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='email' onChange={(event) => { props.handleOnchangeCreate({ "email": event.target.value }) }} />
+                            <input className={'form-control'} type='email' onChange={(event) => { props.handleOnchangeDataUser({ "email": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Phone</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "phone": event.target.value }) }} />
+                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "phone": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Gender</label>
-                            <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeCreate({ "gender": event.target.value }) }}>
+                            <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "gender": event.target.value }) }}>
                                 <option value={'None'} defaultValue>-none-</option>
                                 <option value={'Female'} >Female</option>
                                 <option value={'Male'}>Male</option>
@@ -59,19 +60,29 @@ const ModalUser = (props) => {
                         </div>
                         <div className='form-group col-12'>
                             <label className={''}>Address</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "address": event.target.value }) }} />
+                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "address": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Password(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "password": event.target.value }) }} />
+                            {
+                                (props.action === "CREATE") &&
+                                <>
+                                    <label className={''}>Password(<span className='red'>*</span>)</label>
+                                    <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "password": event.target.value }) }} />
+                                </>
+                            }
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Confirm Password(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeCreate({ "confirmPassword": event.target.value }) }} />
+                            {
+                                (props.action === "CREATE") &&
+                                <>
+                                    <label className={''}>Confirm Password(<span className='red'>*</span>)</label>
+                                    <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "confirmPassword": event.target.value }) }} />
+                                </>
+                            }
                         </div>
                         <div className='form-group col-12'>
                             <label className={''}>Role(<span className='red'>*</span>)</label>
-                            <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeCreate({ "role": event.target.value }) }}>
+                            <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "role": event.target.value }) }}>
                                 {dataRoles.length > 0 &&
                                     dataRoles.map((value, index) => {
                                         return (
@@ -88,7 +99,9 @@ const ModalUser = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button className='btn btn-secondary' onClick={props.handleClose}>Close</Button>
-                    <Button className='btn btn-success' onClick={props.handleCreateFullUser}>submit</Button>
+                    <Button className='btn btn-success' onClick={props.action === "CREATE" ? props.handleCreateFullUser : props.handleEditUser}>
+                        {props.action === "CREATE" ? "Create" : "Update"}
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>

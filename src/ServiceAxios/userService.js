@@ -20,8 +20,8 @@ const createFullUser = async (dataUserFull) => {
     return await axios.post("http://localhost:9000/api/user/createFullUser", { dataUserFull });
 }
 
-const editUserWithId = (id, data) => {
-    return axios.put("http://localhost:9000/api/user/update" + id.idUser, data);
+const editUserWithId = (data) => {
+    return axios.put("http://localhost:9000/api/user/update", { data });
 }
 
 const readRoles = () => {
