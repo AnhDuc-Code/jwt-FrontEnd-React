@@ -13,11 +13,11 @@ const ModalUser = (props) => {
     const getRoles = async () => {
         try {
             let res = await readRoles();
-            if (res.data.EC === 0) {
-                let data = res.data.DT;
+            if (res.EC === 0) {
+                let data = res.DT;
                 await setDataRoles(data);
                 await props.handleOnchangeDataUser({
-                    role: res.data.DT[0].idRole,
+                    role: res.DT[0].idRole,
                     gender: "-none-"
                 });
 

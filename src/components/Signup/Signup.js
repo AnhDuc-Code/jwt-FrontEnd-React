@@ -78,12 +78,11 @@ const Signup = () => {
     const handleSignup = async () => {
         if (isValid() === true) {
             let response = await createUser(email, username, phone, password);
-            let responseData = response.data;
-            if (+responseData.EC === 0) {
-                toast.success(responseData.EM);
+            if (+response.EC === 0) {
+                toast.success(response.EM);
                 navigate("/login");
             } else {
-                toast.error(responseData.EM);
+                toast.error(response.EM);
             }
         }
         // await axios.post("http://localhost:9000/api/signup", { email, username, phone, password }).then((data) => {

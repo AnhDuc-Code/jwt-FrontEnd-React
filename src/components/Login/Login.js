@@ -56,9 +56,9 @@ const Login = () => {
         console.log("handleLogin")
         if (isValid() === true) {
             let response = await loginUser(email, password);
-            let responseData = response.data;
-            if (+responseData.EC === 0) {
-                toast.success(responseData.EM);
+
+            if (+response.EC === 0) {
+                toast.success(response.EM);
                 navigate("/user");
                 const keySession = {
                     isAuthenticated: true,
@@ -66,7 +66,8 @@ const Login = () => {
                 }
                 sessionStorage.setItem("key", JSON.stringify(keySession));
             } else {
-                toast.error(responseData.EM);
+                toast.error(response.EM);
+                return;
             }
         }
     }
@@ -94,7 +95,7 @@ const Login = () => {
                         <h1 style={{ color: "#7777FF" }}>ĐĂNG NHẬP</h1>
                         <input type="text" className={isValidLogin.emailValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
                         <input type="password" className={isValidLogin.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
-                        <button className="btn btn-primary " type="submit"
+                        <button className="btn btn-primary " type="submit" onClick={(event) => { handleLogin(); event.preventDefault(); }}
                         >Đăng Nhập</button>
                         <hr />
                         <ins>Quên mật khẩu?</ins><br />

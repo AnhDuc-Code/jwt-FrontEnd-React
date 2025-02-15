@@ -35,16 +35,14 @@ const User = () => {
     }, [currentPage])
 
     let response;
-    let responseData;
     const getUsers = async () => {
         try {
             response = await readUsersWithPage(currentPage);
-            console.log("check response", response);
+            console.log("check response from getUsers in User.js", response);
             if (response) {
-                responseData = response.data;
-                if (+responseData.EC === 0) {
-                    setListUsers(responseData.DT.data);
-                    setTotalPage(responseData.DT.totalPages);
+                if (+response.EC === 0) {
+                    setListUsers(response.DT.data);
+                    setTotalPage(response.DT.totalPages);
                 }
             }
         } catch (error) {
@@ -76,14 +74,14 @@ const User = () => {
     const handleCreateFullUser = async () => {
         console.log("thông tin sẽ gửi...", dataCreateUser);
         let response = await createFullUser(dataCreateUser);
-        if (response && response.data.EC === 0) {
+        if (response && response.EC === 0) {
             console.log(response);
-            toast.success(response.data.EM);
+            toast.success(response.EM);
             handleClose();
             getUsers();
         }
         else {
-            toast.error(response.data.EM);
+            toast.error(response.EM);
         }
     }
 
@@ -92,11 +90,11 @@ const User = () => {
         try {
             let response = await editUserWithId(dataUpdateUser);
             console.log("check responce", response);
-            if (response && response.data.EC === 0) {
-                toast.success(response.data.EM);
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
                 getUsers();
             } else {
-                toast.error(response.data.EM);
+                toast.error(response.EM);
             }
         } catch (error) {
             console.log('lỗi React Edit Function', error)
@@ -105,11 +103,11 @@ const User = () => {
     //Delete
     const confirmDeleteUser = async () => {
         let response = await deleteUserWithId(dataItem.item);
-        if (response && response.data.EC === 0) {
-            toast.success(response.data.EM);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
             getUsers();
         } else {
-            toast.error(response.data.EM);
+            toast.error(response.EM);
         }
         setShowModal(false);
     }
