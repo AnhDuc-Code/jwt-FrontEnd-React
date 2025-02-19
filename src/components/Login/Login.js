@@ -56,6 +56,7 @@ const Login = () => {
         console.log("handleLogin")
         if (isValid() === true) {
             let response = await loginUser(email, password);
+            console.log("check thông tin gửi về Login", response)
 
             if (+response.EC === 0) {
                 toast.success(response.EM);
