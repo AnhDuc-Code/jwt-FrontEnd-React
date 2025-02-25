@@ -1,0 +1,31 @@
+.product {
+    text-decoration: none !important;
+    padding: 20px;
+    width: 230px;
+    height: 320px;
+    flex-direction: column;
+
+    .product-img {
+        // border-top-left-radius: 5%;
+        // border-top-right-radius: 5%;
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
+    }
+
+    .product-detail {
+        width: 100%;
+        height: 20%;
+        padding-left: 1rem;
+
+        .product-title {
+            color: #000000;
+            margin-top: 3px;
+        }
+
+        .product-price {
+            color: rgb(255, 0, 0);
+            text-decoration: none !important;
+        }
+    }
+}

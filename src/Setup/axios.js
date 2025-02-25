@@ -44,7 +44,7 @@ instance.interceptors.response.use(function (response) {
             return Promise.reject(error)
         }
         case 403: {
-            toast.error("Do NOT have permission to access the feature");
+            toast.error("Do NOT have permission to access the feature! FE");
             return Promise.reject(error)
         }
         case 404: {

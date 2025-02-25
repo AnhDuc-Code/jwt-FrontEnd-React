@@ -8,6 +8,8 @@ import Login from '../components/Login/Login';
 import Signup from '../components/Signup/Signup';
 import App from '../App';
 import PrivateRoutes from "./PrivateRoutes";
+import Product from "../components/Products/Product";
+
 
 const router = createBrowserRouter([
     {
@@ -18,6 +20,12 @@ const router = createBrowserRouter([
                 index: true,
                 element: <HomePage />
             },
+
+            {
+                path: "product",
+                element: <Product />
+            },
+
             {
                 path: "admin",
                 element: <PrivateRoutes>
