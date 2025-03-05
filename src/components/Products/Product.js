@@ -6,8 +6,8 @@ const product = (props) => {
             <a className="product d-flex" href="#link">
                 <img className="product-img" alt="product" src={imgtest}></img>
                 <span className="product-detail">
-                    <label className="product-title">Milk</label>
-                    <p className="product-price"> $price</p>
+                    <label className="product-title">{props.title}</label><label>- {props.brand}</label>
+                    <p className="product-price">{props.price}</p>
                 </span>
             </a >
         </>
