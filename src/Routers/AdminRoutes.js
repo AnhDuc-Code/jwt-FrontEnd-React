@@ -9,6 +9,9 @@ import Signup from '../components/Signup/Signup';
 import App from '../App';
 import PrivateRoutes from "./PrivateRoutes";
 import Product from "../components/Products/Product";
+import ProductDetail from "../components/Products/ProductDetail";
+import Seller from "../components/Seller/Seller";
+import Cart from "../components/Cart/Cart";
 
 
 const router = createBrowserRouter([
@@ -22,8 +25,20 @@ const router = createBrowserRouter([
             },
 
             {
+                path: "cart",
+                element: <Cart />
+            },
+            {
+                path: "seller",
+                element: <Seller />
+            },
+            {
                 path: "product",
                 element: <Product />
+            },
+            {
+                path: "productDetail",
+                element: <ProductDetail />
             },
 
             {

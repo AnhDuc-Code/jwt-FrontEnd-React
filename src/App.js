@@ -8,12 +8,12 @@ const App = () => {
 
 
   return (
-    <div className='App-container'>
-      <div className='Header-container'>
+    <div className='App-container container'>
+      <div className='Header-container container'>
 
         <Header />
       </div>
-      <div className='App-container'>
+      <div className='App-container container'>
       </div>
       <div className='app-content'>
         <Outlet />

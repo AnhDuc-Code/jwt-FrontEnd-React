@@ -1,16 +1,17 @@
 import "./Product.scss"
 import imgtest from "./testSrc/1.png";
-const product = (props) => {
+import { NavLink } from "react-router-dom"
+const Product = (props) => {
     return (
         <>
-            <a className="product d-flex" href="#link">
+            <NavLink className="product d-flex" to="productDetail">
                 <img className="product-img" alt="product" src={imgtest}></img>
                 <span className="product-detail">
                     <label className="product-title">{props.title}</label><label>- {props.brand}</label>
                     <p className="product-price">{props.price}</p>
                 </span>
-            </a >
+            </NavLink>
         </>
     )
 }
-export default product;
+export default Product;

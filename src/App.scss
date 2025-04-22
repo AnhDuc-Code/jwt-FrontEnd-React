@@ -9,10 +9,10 @@ body {
 
 @media (min-width: 1920px) {
   .App-container {
-    max-width: 1920px;
+    max-width: 1620px;
 
     .Header-container {
-      max-width: 1920px;
+      max-width: 1620px;
 
       .container,
       .container-lg,
@@ -20,7 +20,7 @@ body {
       .container-sm,
       .container-xl,
       .container-xxl {
-        max-width: 1900px;
+        max-width: 1600px;
       }
     }
   }

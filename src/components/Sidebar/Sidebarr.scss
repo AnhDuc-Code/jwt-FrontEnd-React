@@ -1,0 +1,45 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+
+
+    .category-list span {
+        font-size: 1.2rem;
+        color: #000000 !important;
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding-left: 0;
+        text-decoration: none;
+
+        &:hover {
+            color: #007bff !important; // Màu khi hover
+        }
+
+        &.active {
+            font-weight: bold;
+            color: #ff6600 !important; // Màu khi NavLink đang active
+        }
+    }
+
+    .filter-rating span {
+        font-size: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        color: #00b818 !important;
+
+        &:hover {
+            color: #007bff !important; // Màu khi hover
+        }
+
+        &.active {
+            font-weight: bold;
+            color: #ff6600 !important; // Màu khi NavLink đang active
+        }
+    }
+}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { readRoles } from '../../ServiceAxios/userService';
+// import { readRoles } from '../../ServiceAxios/userService';
 
-const ModalUser = (props) => {
+const ModelProductActions = (props) => {
     const [dataRoles, setDataRoles] = useState([]);
     useEffect(() => {
         getRoles();
@@ -75,13 +75,13 @@ const ModalUser = (props) => {
                             {
                                 (props.action === "CREATE") &&
                                 <>
-                                    <label className={''}>Xác nhận mật khẩu(<span className='red'>*</span>)</label>
+                                    <label className={''}>Confirm Password(<span className='red'>*</span>)</label>
                                     <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "confirmPassword": event.target.value }) }} />
                                 </>
                             }
                         </div>
                         <div className='form-group col-12'>
-                            <label className={''}>Chức vụ(<span className='red'>*</span>)</label>
+                            <label className={''}>Role(<span className='red'>*</span>)</label>
                             <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "role": event.target.value }) }}>
                                 {dataRoles.length > 0 &&
                                     dataRoles.map((value, index) => {
@@ -98,7 +98,7 @@ const ModalUser = (props) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className='btn btn-secondary' onClick={props.handleClose}>Đóng</Button>
+                    <Button className='btn btn-secondary' onClick={props.handleClose}>Close</Button>
                     <Button className='btn btn-success' onClick={props.action === "CREATE" ? props.handleCreateFullUser : props.handleEditUser}>
                         {props.action === "CREATE" ? "Create" : "Update"}
                     </Button>
@@ -107,4 +107,4 @@ const ModalUser = (props) => {
         </>
     )
 }
-export default ModalUser;
+export default ModelProductActions;
