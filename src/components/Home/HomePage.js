@@ -4,7 +4,7 @@ import { getProducts } from "../../ServiceAxios/homeService";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Sidebarr from '../Sidebar/Sidebarr'
-
+import "./HomePage.scss"
 const HomePage = () => {
     const [dataMilks, setDataMilks] = useState([]);
     useEffect(() => {
@@ -29,18 +29,23 @@ const HomePage = () => {
             </div>
             <div className="Homepage_content d-flex container">
                 <Sidebarr />
-                {dataMilks && dataMilks.length > 0 &&
-                    dataMilks.map((item) => {
-                        console.log(item);
-                        return <Product title={item.title} key={item.idProduct} price={item.price} brand={item.brand} />
+                <div className="row">
 
-                    })
-                }
+                    {dataMilks && dataMilks.length > 0 &&
+                        dataMilks.map((item, index) => {
+                            console.log(item, index);
+
+                            return <div className="oneObject col-3" key={item.idProduct}>
+                                <Product title={item.title} price={item.price} brand={item.brand} description={item.description} category={item.category} />
+                            </div>
+                        })
+                    }
+                </div>
             </div>
 
             <main className="product-list">
                 <div className="product-card">
-                    <img src="https://via.placeholder.com/120" alt="So Good" />
+                    <img src="" alt="So Good" />
                     <h4>So Good</h4>
                     <p>Plant-Based Soy Beverage - Original</p>
                     <p className="rating">⭐ 3.9 (289 Ratings)</p>
@@ -52,7 +57,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="product-card">
-                    <img src="https://via.placeholder.com/120" alt="Nestle A+" />
+                    <img src="" alt="Nestle A+" />
                     <h4>Nestle A+</h4>
                     <p>Slim Fat Free Milk</p>
                     <p className="rating">⭐ 5 (1 Rating)</p>
@@ -64,7 +69,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="product-card">
-                    <img src="https://via.placeholder.com/120" alt="Purabi" />
+                    <img src="" alt="Purabi" />
                     <h4>Purabi</h4>
                     <p>Standard Milk</p>
                     <p className="rating">⭐ 4.8 (4 Ratings)</p>

@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useEffect, useState } from 'react';
-
+// import "./Header.scss";
 
 const Home = (props) => {
     let navigate = useNavigate();
@@ -27,11 +27,11 @@ const Home = (props) => {
         <>
 
 
-            <Navbar expand="lg" className="bg-body-tertiary">
-                <Container>
+            <Navbar expand="lg" className="mynav bg-body-tertiary ">
+                <Container className='bodynav' style={{ background: '#FFFFFF' }}>
                     <Navbar.Brand as={NavLink} to="/">My App</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                    <Navbar.Collapse id="basic-navbar-nav" >
                         {isAuthen &&
                             <div className="d-flex justify-content-between w-100">
                                 {/* Nhóm bên trái */}

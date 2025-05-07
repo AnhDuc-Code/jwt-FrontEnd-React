@@ -5,14 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F7F7F7;
+}
+
+.Header-container {
+  background-color: #FFFFFF;
+
 }
 
 @media (min-width: 1920px) {
   .App-container {
-    max-width: 1620px;
+    max-width: 1720px;
 
     .Header-container {
-      max-width: 1620px;
+      max-width: 1720px;
 
       .container,
       .container-lg,
@@ -20,7 +26,7 @@ body {
       .container-sm,
       .container-xl,
       .container-xxl {
-        max-width: 1600px;
+        max-width: 1700px;
       }
     }
   }

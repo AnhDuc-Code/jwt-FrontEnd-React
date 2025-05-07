@@ -1,4 +1,20 @@
+import { useEffect, useState } from "react";
+
+
 const Seller = () => {
+    const a = useState("");
+
+    const [listProducts, setListProducts] = useState([]);
+    const getProducts = () => {
+        try {
+
+        } catch (error) {
+
+        }
+    }
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     return (
         <>

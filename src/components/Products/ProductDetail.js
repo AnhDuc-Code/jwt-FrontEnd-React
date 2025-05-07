@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import "./ProductDetail.scss";
-// import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const ProductDetail = (props) => {
-
+    const location = useLocation();
+    console.log(location);
     const productDetail1 = () => {
 
     }
 
     useEffect(() => {
+        console.log("check Props: ", props);
         productDetail1();
     }, []
     )
@@ -15,7 +17,6 @@ const ProductDetail = (props) => {
 
     return (
         <>
-            <h2 className="product-category container">Milk (số lương sữa search)</h2>
             <div className="product-detail  container">
                 <div className="product-detail_left">
                     <img src="/milk.png" alt="milk" className="product-detail_image" />
@@ -23,35 +24,33 @@ const ProductDetail = (props) => {
 
                 <div className="product-detail_right">
                     <p className="brand">So Good</p>
-                    <h2 className="title">props.title So Good Plant-Based Soy Beverage - Original, 2x1 L Multipack</h2>
+                    <h2 className="title">{location.state.title}</h2>
 
                     <div className="rating">
-                        <span className="stars">⭐ props.rate</span>
-                        <span className="reviews">props.numberRate Ratings & props.numberReview Reviews</span>
+                        <span className="stars">⭐ location.state.rate</span>
+                        <span className="reviews">location.state.numberRate Ratings & location.state.numberReview Reviews</span>
                     </div>
 
                     <div className="price">
-                        <strong>props.price</strong>
-                        <span className="unit"> (props.price / props.quantity L)</span>
+                        <strong>{location.state.price} - Hãng {location.state.brand}</strong>
                     </div>
-                    <p className="tax-info">(inclusive of all taxes)</p>
-
                     <div className="actions">
                         <button className="btn btn-add">Thêm vào giỏ hàng</button>
                     </div>
 
                     <div className="pack-sizes">
-                        <h4>Phân loại</h4>
+                        <b className="text-selector">Phân loại</b>
                         <div className="pack-option selected">
                             <div>
-                                <strong>props.quantity L</strong>
-                            </div>
-                            <div className="price-right">
-                                ₹290 (₹145 / L) ✔
+                                <strong>{location.state.price}</strong>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="container">
+                <p className="text-description">Mô tả Sản Phẩm</p>
+                <p className="description">{location.state.description}</p>
             </div>
 
         </>
