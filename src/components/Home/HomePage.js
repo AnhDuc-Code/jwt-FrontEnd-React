@@ -4,19 +4,29 @@ import { getProducts } from "../../ServiceAxios/homeService";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Sidebarr from '../Sidebar/Sidebarr'
+import { getProductsFiltered } from "../../ServiceAxios/homeService";
+
 import "./HomePage.scss"
 const HomePage = () => {
     const [dataMilks, setDataMilks] = useState([]);
+    const [theFilterMilk, setTheFilterMilk] = useState();
     useEffect(() => {
         getPageHome();
     }, []
     )
     const getPageHome = async () => {
-        const responseData = await getProducts();
+        let responseData = await getProducts();
         setDataMilks(responseData.DT.data);
 
         console.log("check response Homepage: ", responseData.DT.data)
     };
+
+    const filterMilk = async (typeMilk) => {
+        console.log("check typeMilk before send Request: ", typeMilk);
+        let responseData = await getProductsFiltered(1, typeMilk);
+        console.log("check response Homepage: ", responseData)
+        setDataMilks(responseData.DT.data);
+    }
 
     return (
         <>
@@ -28,7 +38,7 @@ const HomePage = () => {
                 </InputGroup>
             </div>
             <div className="Homepage_content d-flex container">
-                <Sidebarr />
+                <Sidebarr filterMilk={filterMilk} />
                 <div className="row">
 
                     {dataMilks && dataMilks.length > 0 &&
@@ -42,44 +52,6 @@ const HomePage = () => {
                     }
                 </div>
             </div>
-
-            <main className="product-list">
-                <div className="product-card">
-                    <img src="" alt="So Good" />
-                    <h4>So Good</h4>
-                    <p>Plant-Based Soy Beverage - Original</p>
-                    <p className="rating">⭐ 3.9 (289 Ratings)</p>
-                    <select>
-                        <option>2x1 L - Multipack</option>
-                    </select>
-                    <p className="price">₹290</p>
-                    <button>Add</button>
-                </div>
-
-                <div className="product-card">
-                    <img src="" alt="Nestle A+" />
-                    <h4>Nestle A+</h4>
-                    <p>Slim Fat Free Milk</p>
-                    <p className="rating">⭐ 5 (1 Rating)</p>
-                    <select>
-                        <option>1 L - (Pack of 12)</option>
-                    </select>
-                    <p className="price">₹1140</p>
-                    <button>Add</button>
-                </div>
-
-                <div className="product-card">
-                    <img src="" alt="Purabi" />
-                    <h4>Purabi</h4>
-                    <p>Standard Milk</p>
-                    <p className="rating">⭐ 4.8 (4 Ratings)</p>
-                    <select>
-                        <option>500 ml - Pouch</option>
-                    </select>
-                    <p className="price">₹33</p>
-                    <button>Add</button>
-                </div>
-            </main>
         </>
     )
 }

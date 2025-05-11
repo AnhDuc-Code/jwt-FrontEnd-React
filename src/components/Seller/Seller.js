@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-
+import { getProductsService } from "../../ServiceAxios/productService";
 
 const Seller = () => {
     const a = useState("");
 
     const [listProducts, setListProducts] = useState([]);
-    const getProducts = () => {
-        try {
+    useEffect(() => {
+        getProducts();
+    }, []);
 
+    const getProducts = async () => {
+        try {
+            let responce = await getProductsService();
+            if (responce && responce.EC === 0) {
+                console.log("check res productUser", responce);
+                setListProducts(responce.DT);
+            }
         } catch (error) {
 
         }
     }
-    useEffect(() => {
-        getProducts();
-    }, []);
 
     return (
         <>
@@ -33,42 +38,43 @@ const Seller = () => {
                             <th style={{ flex: 2 }}>Phân loại</th>
                             <th style={{ flex: 2 }}>Hãng</th>
                             <th style={{ flex: 2 }}>Giá</th>
+                            <th style={{ flex: 2 }}>thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            // listProducts && listProducts.length > 0 ?
-                            //     <>
-                            //         {listProducts.map((item, index) => {
-                            //             return (
-                            //                 <tr className="d-flex" key={index}>
-                            //                     <td style={{ flex: 2 }}>{item.image}</td>
-                            //                     <td style={{ flex: 3 }}>{item.title}</td>
-                            //                     <td style={{ flex: 3 }}>{item.description}</td>
-                            //                     <td style={{ flex: 2 }}>{item.category}</td>
-                            //                     <td style={{ flex: 2 }}>{item.brand}</td>
-                            //                     <td style={{ flex: 2 }}>{item.price}</td>
-                            //                     <td style={{ flex: 2 }}>
-                            //                         {/* <button className="btn btn-warning me-2" onClick={() => {
-                            //                             setShowModalCreate(true);
-                            //                             setAction("UPDATE");
-                            //                             setDataUpdateUser(item);
-                            //                         }}>Sửa</button> */}
-                            //                         {/* <button className="btn btn-danger" onClick={() => deleteUser({ item })}>Xóa</button> */}
-                            //                     </td>
-                            //                 </tr>
-                            //             )
+                            listProducts && listProducts.length > 0 ?
+                                <>
+                                    {listProducts.map((item, index) => {
+                                        return (
+                                            <tr className="d-flex" key={index}>
+                                                <td style={{ flex: 2 }}>{item.image}</td>
+                                                <td style={{ flex: 3 }}>{item.title}</td>
+                                                <td style={{ flex: 3 }}>{item.description}</td>
+                                                <td style={{ flex: 2 }}>{item.category}</td>
+                                                <td style={{ flex: 2 }}>{item.brand}</td>
+                                                <td style={{ flex: 2 }}>{item.price}</td>
+                                                <td style={{ flex: 2 }}>
+                                                    {/* <button className="btn btn-warning me-2" onClick={() => {
+                                                        setShowModalCreate(true);
+                                                        setAction("UPDATE");
+                                                        setDataUpdateUser(item);
+                                                    }}>Sửa</button> */}
+                                                    {/* <button className="btn btn-danger" onClick={() => deleteUser({ item })}>Xóa</button> */}
+                                                </td>
+                                            </tr>
+                                        )
 
-                            //         })}
-                            //     </>
-                            //     :
-                            <>
-                                <tr>
-                                    <td>
-                                        Không có bản ghi nào
-                                    </td>
-                                </tr>
-                            </>
+                                    })}
+                                </>
+                                :
+                                <>
+                                    <tr>
+                                        <td>
+                                            Không có bản ghi nào
+                                        </td>
+                                    </tr>
+                                </>
                         }
                     </tbody>
 

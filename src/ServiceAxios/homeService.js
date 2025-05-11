@@ -6,7 +6,7 @@ const getProducts = async (page) => {
 }
 const getProductsFiltered = async (page, filtered) => {
     // return await axios.get(`api/home?page=${page}`);
-    return await axios.get(`api/home?page=1&filtered=powder`);
+    return await axios.get(`api/home?page=1&filtered=${filtered}`);
 
 }
 

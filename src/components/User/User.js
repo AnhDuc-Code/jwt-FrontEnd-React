@@ -132,12 +132,12 @@ const User = () => {
                 <table className="table table-hover table-bordered">
                     <thead>
                         <tr className="d-flex">
-                            <th style={{ flex: 2 }}>Username</th>
+                            <th style={{ flex: 2 }}>Tài khoản</th>
                             <th style={{ flex: 3 }}>Email</th>
-                            <th style={{ flex: 3 }}>Address</th>
-                            <th style={{ flex: 2 }}>Phone</th>
-                            <th style={{ flex: 2 }}>Role</th>
-                            <th style={{ flex: 2 }}>Action</th>
+                            <th style={{ flex: 3 }}>Địa chỉ</th>
+                            <th style={{ flex: 2 }}>Số điện thoại</th>
+                            <th style={{ flex: 2 }}>Chức vụ</th>
+                            <th style={{ flex: 2 }}>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
