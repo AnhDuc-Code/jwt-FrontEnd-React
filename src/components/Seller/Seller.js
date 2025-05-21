@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
-import { getProductsService } from "../../ServiceAxios/productService";
-
+import { getProductsService, createProduct, deleteProductWithId } from "../../ServiceAxios/productService";
+import ModalProductActions from "./ModalProductActions";
+import ModalDelete from "./ModalDelete";
+import { toast } from 'react-toastify';
 const Seller = () => {
-    const a = useState("");
-
     const [listProducts, setListProducts] = useState([]);
+    const [showModalActions, setShowModalActions] = useState(false);
+    const [showModalDelete, setShowModalDelete] = useState(false);
+    const [action, setAction] = useState("CREATE");
+    const defaultData = {
+        image: "", title: "", description: "", price: "", category: "", brand: ""
+    }
+    const [imagePreview, setImagePreview] = useState(null);
+    const [dataCreate, setDataCreate] = useState(defaultData);
+    const [dataUpdate, setDataUpdate] = useState(defaultData);
+    const [dataDelete, setDataDelete] = useState(defaultData);
     useEffect(() => {
         getProducts();
     }, []);
@@ -21,13 +31,75 @@ const Seller = () => {
         }
     }
 
+    const onchangeDataProduct = async (input) => {
+        if (action === "CREATE") {
+            await setDataCreate({ ...dataCreate, ...input })
+        } else {
+            await setDataUpdate({ ...dataUpdate, ...input })
+        }
+    }
+
+    const setImage = (event) => {
+        console.log("check event", event);
+        const file = event.target.files[0];
+        setImagePreview(URL.createObjectURL(file));
+        setDataCreate((pre) => ({ ...pre, image: file }))
+    }
+
+    const handleCreateProduct = async () => {
+        console.log("gửi Create", dataCreate.image);
+        const formCreate = new FormData();
+        formCreate.append("image", dataCreate.image); // ✅ File object
+        formCreate.append("title", dataCreate.title);
+        formCreate.append("description", dataCreate.description);
+        formCreate.append("price", dataCreate.price);
+        formCreate.append("category", dataCreate.category);
+        formCreate.append("brand", dataCreate.brand);
+        let response = await createProduct(formCreate);
+        if (response && response.EC === 0) {
+            console.log(response);
+            toast.success(response.EM);
+            handleClose();
+            getProducts();
+        }
+        else {
+            toast.error(response.EM);
+        }
+    }
+
+
+    const deleteProduct = async (item) => {
+        setDataDelete(item);
+        setShowModalDelete(true);
+        console.log("check dDelete", dataDelete);
+    }
+
+    const confirmDeleteProduct = async () => {
+        let response = await deleteProductWithId(dataDelete.item);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+            getProducts();
+        } else {
+            toast.error(response.EM);
+        }
+        setShowModalDelete(false);
+    }
+
+    const handleClose = () => {
+        setShowModalActions(false);
+        setShowModalDelete(false);
+        setDataDelete({});
+        setDataCreate(defaultData);
+        setDataUpdate(defaultData);
+        setImagePreview(null);
+    }
     return (
         <>
             <div className="Seller-container container">
                 <div>
-                    {/* <button className="btn btn-primary my-3" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>
+                    <button className="btn btn-primary my-3" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>
                         Thêm sản phẩm bán
-                    </button> */}
+                    </button>
                 </div>
                 <table className="table table-hover table-bordered">
                     <thead>
@@ -48,19 +120,19 @@ const Seller = () => {
                                     {listProducts.map((item, index) => {
                                         return (
                                             <tr className="d-flex" key={index}>
-                                                <td style={{ flex: 2 }}>{item.image}</td>
+                                                <td style={{ flex: 2 }}><img src={`http://localhost:9000${item.image}`} /></td>
                                                 <td style={{ flex: 3 }}>{item.title}</td>
                                                 <td style={{ flex: 3 }}>{item.description}</td>
                                                 <td style={{ flex: 2 }}>{item.category}</td>
                                                 <td style={{ flex: 2 }}>{item.brand}</td>
                                                 <td style={{ flex: 2 }}>{item.price}</td>
                                                 <td style={{ flex: 2 }}>
-                                                    {/* <button className="btn btn-warning me-2" onClick={() => {
-                                                        setShowModalCreate(true);
+                                                    <button className="btn btn-warning me-2" onClick={() => {
+                                                        setShowModalActions(true);
                                                         setAction("UPDATE");
-                                                        setDataUpdateUser(item);
-                                                    }}>Sửa</button> */}
-                                                    {/* <button className="btn btn-danger" onClick={() => deleteUser({ item })}>Xóa</button> */}
+                                                        setDataUpdate(item);
+                                                    }}>Sửa</button>
+                                                    <button className="btn btn-danger" onClick={() => deleteProduct({ item })}>Xóa</button>
                                                 </td>
                                             </tr>
                                         )
@@ -94,11 +166,12 @@ const Seller = () => {
                     </span> */}
                 </span>
             </div >
-            {/* <ModalDelete show={showModal} handleClose={handleClose} confirmDeleteUser={confirmDeleteUser} />
-            <ModalUser action={action} show={showModalCreate} handleClose={handleClose}
-                handleCreateFullUser={handleCreateFullUser} handleOnchangeDataUser={handleOnchangeDataUser}
-                handleEditUser={handleEditUser} dataUpdateUser={dataUpdateUser} showModalCreate={showModalCreate}
-            /> */}
+            <ModalDelete show={showModalDelete} handleClose={handleClose} confirmDeleteProduct={confirmDeleteProduct} />
+            <ModalProductActions
+                action={action} show={showModalActions} handleClose={handleClose}
+                handleCreateProduct={handleCreateProduct} onchangeDataProduct={onchangeDataProduct} setImage={setImage} imagePreview={imagePreview}
+            //     handleEditUser={handleEditUser} dataUpdateUser={dataUpdateUser} showModalCreate={showModalCreate}
+            />
         </>
     )
 }

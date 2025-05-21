@@ -30,7 +30,7 @@ const ModalUser = (props) => {
 
     return (
         <>
-            <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.show} >
+            <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.showModalCreate} >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modalUser-title">
                         {props.action === "CREATE" ? "CREATE NEW USER" : "UPDATE USER"}
