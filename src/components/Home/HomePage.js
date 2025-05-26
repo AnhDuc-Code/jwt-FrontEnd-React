@@ -9,7 +9,7 @@ import { getProductsFiltered } from "../../ServiceAxios/homeService";
 import "./HomePage.scss"
 const HomePage = () => {
     const [dataMilks, setDataMilks] = useState([]);
-    const [theFilterMilk, setTheFilterMilk] = useState();
+    // const [theFilterMilk, setTheFilterMilk] = useState();
     useEffect(() => {
         getPageHome();
     }, []
@@ -37,16 +37,16 @@ const HomePage = () => {
 
                 </InputGroup>
             </div>
-            <div className="Homepage_content d-flex container">
+            <div className="Homepage_content d-flex">
                 <Sidebarr filterMilk={filterMilk} />
-                <div className="row">
+                <div className="Homepage_content_right">
 
                     {dataMilks && dataMilks.length > 0 &&
                         dataMilks.map((item, index) => {
                             console.log(item, index);
 
-                            return <div className="oneObject col-3" key={item.idProduct}>
-                                <Product title={item.title} price={item.price} brand={item.brand} description={item.description} category={item.category} />
+                            return <div className="oneObject" key={item.idProduct}>
+                                <Product image={item.image} title={item.title} price={item.price} brand={item.brand} description={item.description} category={item.category} />
                             </div>
                         })
                     }

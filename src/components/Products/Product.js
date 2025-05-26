@@ -8,6 +8,7 @@ const Product = (props) => {
         navigate('/productDetail', {
             state:
             {
+                image: props.image,
                 title: props.title,
                 price: props.price,
                 description: props.description,
@@ -23,7 +24,13 @@ const Product = (props) => {
     return (
         <>
             <div className="product" onClick={() => { toProductDetail(); }}>
-                <img className="product-img" alt="product" src={imgtest}></img>
+                <img className="product-img" alt="product" src={`http://localhost:9000${props.image}`} style={{
+                    width: '200px',
+                    height: '200px',
+                    objectFit: 'cover',
+                    border: '1px solid #ccc',
+                    borderRadius: '8px'
+                }} />
                 <div className="product-detail-home">
                     <p className="product-title-home">{props.title}</p>
                     <p>{props.brand}</p>

@@ -1,3 +1,11 @@
 .oneObject {
-    width: 25%;
+    max-width: 100%;
+}
+
+.Homepage_content {
+    .Homepage_content_right {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
 }

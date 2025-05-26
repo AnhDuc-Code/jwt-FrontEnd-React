@@ -19,7 +19,13 @@ const ProductDetail = (props) => {
         <>
             <div className="product-detail  container">
                 <div className="product-detail_left">
-                    <img src="/milk.png" alt="milk" className="product-detail_image" />
+                    <img src={`http://localhost:9000${location.state.image}`} style={{
+                        width: '400px',
+                        height: '400px',
+                        objectFit: 'cover',
+                        border: '1px solid #ccc',
+                        borderRadius: '8px'
+                    }} alt="milk" className="product-detail_image" />
                 </div>
 
                 <div className="product-detail_right">
@@ -28,7 +34,7 @@ const ProductDetail = (props) => {
 
                     <div className="rating">
                         <span className="stars">⭐ location.state.rate</span>
-                        <span className="reviews">location.state.numberRate Ratings & location.state.numberReview Reviews</span>
+                        <span className="reviews">location.state.numberRate Đánh giá & location.state.numberReview Bình luận</span>
                     </div>
 
                     <div className="price">

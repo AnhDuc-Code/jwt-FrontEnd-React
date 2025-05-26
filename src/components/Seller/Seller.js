@@ -9,7 +9,7 @@ const Seller = () => {
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [action, setAction] = useState("CREATE");
     const defaultData = {
-        image: "", title: "", description: "", price: "", category: "", brand: ""
+        image: "", title: "", description: "", price: "", category: "", brand: "", quantity: ""
     }
     const [imagePreview, setImagePreview] = useState(null);
     const [dataCreate, setDataCreate] = useState(defaultData);
@@ -55,6 +55,7 @@ const Seller = () => {
         formCreate.append("price", dataCreate.price);
         formCreate.append("category", dataCreate.category);
         formCreate.append("brand", dataCreate.brand);
+        formCreate.append("quantity", dataCreate.quantity);
         let response = await createProduct(formCreate);
         if (response && response.EC === 0) {
             console.log(response);
@@ -109,6 +110,7 @@ const Seller = () => {
                             <th style={{ flex: 3 }}>Mô tả</th>
                             <th style={{ flex: 2 }}>Phân loại</th>
                             <th style={{ flex: 2 }}>Hãng</th>
+                            <th style={{ flex: 2 }}>Số lượng</th>
                             <th style={{ flex: 2 }}>Giá</th>
                             <th style={{ flex: 2 }}>thao tác</th>
                         </tr>
@@ -120,11 +122,18 @@ const Seller = () => {
                                     {listProducts.map((item, index) => {
                                         return (
                                             <tr className="d-flex" key={index}>
-                                                <td style={{ flex: 2 }}><img src={`http://localhost:9000${item.image}`} /></td>
+                                                <td style={{ flex: 2 }}><img src={`http://localhost:9000${item.image}`} style={{
+                                                    width: '125px',
+                                                    height: '125px',
+                                                    objectFit: 'cover',
+                                                    border: '1px solid #ccc',
+                                                    borderRadius: '8px'
+                                                }} /></td>
                                                 <td style={{ flex: 3 }}>{item.title}</td>
                                                 <td style={{ flex: 3 }}>{item.description}</td>
                                                 <td style={{ flex: 2 }}>{item.category}</td>
                                                 <td style={{ flex: 2 }}>{item.brand}</td>
+                                                <td style={{ flex: 2 }}>{item.quantity}</td>
                                                 <td style={{ flex: 2 }}>{item.price}</td>
                                                 <td style={{ flex: 2 }}>
                                                     <button className="btn btn-warning me-2" onClick={() => {

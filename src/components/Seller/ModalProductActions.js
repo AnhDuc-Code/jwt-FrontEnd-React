@@ -19,32 +19,42 @@ const ModelProductActions = (props) => {
             <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.show} >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modalUser-title">
-                        {props.action === "CREATE" ? "CREATE NEW USER" : "UPDATE USER"}
+                        {props.action === "CREATE" ? "Thêm sản phẩm" : "Sửa sản phẩm"}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='modal-body row'>
                         <div className="mb-3">
-                            <label for="formFile" class="form-label">Default file input example</label>
+                            <label for="formFile" class="form-label">Ảnh sản phẩm(<span className='red'>*</span>)</label>
                             <input className="form-control" type="file" id="formFile" accept="image/*" onChange={props.setImage} />
-                            {props.imagePreview !== null && <img src={props.imagePreview} alt='ảnh preview lỗi' />}
+                            {props.imagePreview !== null && <img src={props.imagePreview} alt='ảnh preview lỗi' style={{
+                                width: '300px',
+                                height: '300px',
+                                objectFit: 'cover',
+                                border: '1px solid #ccc',
+                                borderRadius: '8px'
+                            }} />}
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Tên Sản Phẩm(<span className='red'>*</span>)</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.onchangeDataProduct({ "title": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Giá tiền</label>
+                            <label className={''}>Giá tiền(<span className='red'>*</span>)</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.onchangeDataProduct({ "price": event.target.value }) }} />
                         </div>
 
                         <div className='form-group col-6'>
-                            <label className={''}>Phân loại(select)</label>
+                            <label className={''}>Phân loại(<span className='red'>*</span>)</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.onchangeDataProduct({ "category": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>brand(select)</label>
+                            <label className={''}>Hãng(<span className='red'>*</span>)</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.onchangeDataProduct({ "brand": event.target.value }) }} />
+                        </div>
+                        <div className='form-group col-6'>
+                            <label className={''}>Số lượng(<span className='red'>*</span>)</label>
+                            <input className={'form-control'} type='text' onChange={(event) => { props.onchangeDataProduct({ "quantity": event.target.value }) }} />
                         </div>
                         <div className='form-group col-12'>
                             <label className={''}>Mô tả</label>
