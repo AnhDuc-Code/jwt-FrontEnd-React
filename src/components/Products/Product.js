@@ -1,7 +1,12 @@
 import "./Product.scss"
 import ProductDetail from "./ProductDetail";
 import imgtest from "./testSrc/1.png";
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom";
+import ModalAddtoCart from "../Cart/ModalCart";
+import { addToCart } from "../../ServiceAxios/cartService";
+import { toast } from 'react-toastify';
+import { useState } from "react";
+
 const Product = (props) => {
     const navigate = useNavigate();
     const toProductDetail = () => {
@@ -17,27 +22,59 @@ const Product = (props) => {
             }
         });
     }
+    const [showModal, setShowModal] = useState(false);
+    const [numBuy, setNumBuy] = useState(1);
 
-    const addToCart = () => {
-
+    const showModalCart = () => {
+        setShowModal(true);
     }
+
+    const addTCart = async () => {
+        try {
+            let response = await addToCart({ idProduct: props.idProduct, numBuy: numBuy });
+            if (response && response.EC === 0) {
+                console.log(response);
+                toast.success(response.EM);
+                handleClose();
+            }
+            else {
+                toast.error(response.EM);
+            }
+        } catch (error) {
+            toast.error("Lỗi FE khi thêm vào giỏ hàng");
+        }
+    }
+
+    const handleClose = () => {
+        setShowModal(false);
+        // setShowModalCreate(false);
+        // setDataItem({});
+        // setDataCreateUser(defaultData);
+        // setDataUpdateUser(defaultData);
+    }
+
     return (
         <>
-            <div className="product" onClick={() => { toProductDetail(); }}>
-                <img className="product-img" alt="product" src={`http://localhost:9000${props.image}`} style={{
-                    width: '200px',
-                    height: '200px',
-                    objectFit: 'cover',
-                    border: '1px solid #ccc',
-                    borderRadius: '8px'
-                }} />
-                <div className="product-detail-home">
-                    <p className="product-title-home">{props.title}</p>
-                    <p>{props.brand}</p>
-                    <p className="product-price-home">{props.price}</p>
+            <div className="product">
+
+                <div onClick={() => { toProductDetail(); }}>
+                    <img className="product-img" alt="product" src={`http://localhost:9000${props.image}`} style={{
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'cover',
+                        border: '1px solid #ccc',
+                        borderRadius: '8px'
+                    }} />
+                    <div className="product-detail-home">
+                        <p className="product-title-home">{props.title}</p>
+                        <p>{props.brand}</p>
+                        <p className="product-price-home">{props.price}</p>
+                    </div>
                 </div>
-                <button className="addToCart-home btn" onClick={() => addToCart()}>Thêm vào giỏ hàng</button>
+                <button className="addToCart-home btn" onClick={() => showModalCart()}>Thêm vào giỏ hàng</button>
             </div>
+            <ModalAddtoCart show={showModal} handleClose={handleClose} addTCart={addTCart}
+                imagePreview={props.image} title={props.title} category={props.category} setNumBuy={setNumBuy} price={props.price} numBuy={numBuy} />
         </>
     )
 }

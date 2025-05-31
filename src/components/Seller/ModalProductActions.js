@@ -25,7 +25,7 @@ const ModelProductActions = (props) => {
                 <Modal.Body>
                     <div className='modal-body row'>
                         <div className="mb-3">
-                            <label for="formFile" class="form-label">Ảnh sản phẩm(<span className='red'>*</span>)</label>
+                            <label for="formFile" className="form-label">Ảnh sản phẩm(<span className='red'>*</span>)</label>
                             <input className="form-control" type="file" id="formFile" accept="image/*" onChange={props.setImage} />
                             {props.imagePreview !== null && <img src={props.imagePreview} alt='ảnh preview lỗi' style={{
                                 width: '300px',
@@ -96,7 +96,7 @@ const ModelProductActions = (props) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className='btn btn-secondary' onClick={props.handleClose}>Close</Button>
+                    <Button className='btn btn-secondary' onClick={props.handleClose}>Đóng</Button>
                     <Button className='btn btn-success' onClick={props.action === "CREATE" ? props.handleCreateProduct : props.handleEditProduct}>
                         {props.action === "CREATE" ? "Thêm sản phẩm" : "Sửa sản phẩm"}
                     </Button>

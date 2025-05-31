@@ -1,0 +1,16 @@
+.cart_preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cart_preview .img_bd {
+    flex-shrink: 0;
+    /* giữ kích thước ảnh */
+}
+
+.cart_preview .text_bd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

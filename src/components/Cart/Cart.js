@@ -1,62 +1,75 @@
 import { useEffect, useState } from "react";
 import "./Cart.scss"
+import { getCartService } from "../../ServiceAxios/cartService.js"
 const Cart = () => {
-    const cartItems = useState({
-        image: "",
-        title: "",
-        price: 12
-    });
+    const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [numberProducts, setNumberProducts] = useState(0);
+    const getCartProducts = async () => {
+        try {
+            let response = await getCartService();
+            console.log("check response from getUsers in User.js", response);
+            if (response) {
+                if (+response.EC === 0) {
+                    console.log("Check DataCart: ", response.DT);
+                    setCartItems(response.DT);
+                }
+            }
+        } catch (error) {
 
-    const item = {
-        image: 'image',
-        title: 'title',
-        category: 'category',
-    }
-    const emptyFunc = () => {
-
+        }
     }
     useEffect(() => {
-        emptyFunc();
+        getCartProducts();
     }, [])
+
+
     return (
         <>
-            <div className="cart">
+            <div className="cart container">
                 <h2>🛒 Giỏ Hàng</h2>
 
                 <div className="cart-header">
-                    <input type="checkbox" />
                     <span>Sản Phẩm</span>
+                    <span>Tên Sản Phẩm</span>
+                    <span></span>
                     <span>Đơn Giá</span>
                     <span>Số Lượng</span>
                     <span>Số Tiền</span>
                     <span>Thao Tác</span>
                 </div>
 
-                {/* {cartItems.map((item, index) => ( */}
-                <div key={1} className="cart-item">
-                    <input type="checkbox" />
-                    <img src={item.image} alt={item.title} />
-                    <div className="item-info">
-                        <p>{item.title}</p>
-                        <p>Phân Loại: {item.category}</p>
+                {cartItems.map((item, index) => (
+                    <div key={item.Product.idProduct} className="cart-item">
+                        <img src={`http://localhost:9000${item.Product.image}`} alt={"ảnh sp"} style={{
+                            width: '100px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            border: '1px solid #ccc',
+                            borderRadius: '8px'
+                        }} />
+                        <div className="item-info">
+                            <p>{item.Product.title}</p>
+                            <p>Phân Loại: {item.Product.category}</p>
+                        </div>
+                        <span></span>
+                        <div className="item-price">{Number(item.Product.price).toLocaleString()}₫</div>
+                        <span className="item-quantity">
+                            <button>-</button>
+                            <input type="text" value={item.numBuy} readOnly />
+                            <button>+</button>
+                        </span>
+                        <div className="item-total">{(item.Product.price * item.numBuy).toLocaleString()}₫</div>
+                        <button className="delete-btn">Xoá</button>
                     </div>
-                    {/* <div className="item-price">{item.price.toLocaleString()}₫</div> */}
-                    <div className="item-quantity">
-                        <button>-</button>
-                        <input type="text" value={item.quantity} readOnly />
-                        <button>+</button>
-                    </div>
-                    {/* <div className="item-total">{(item.price * item.quantity).toLocaleString()}₫</div> */}
-                    <button className="delete-btn">Xoá</button>
-                </div>
-                {/* // )) */}
-                {/* } */}
+                ))
+                }
 
                 <div className="cart-footer">
                     <input type="checkbox" />
                     <span>Chọn Tất Cả</span>
                     <button>Xoá sp đã chọn</button>
-                    <span>Tổng cộng (? sản phẩm): <strong>? ₫</strong></span>
+                    <span>Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong></span>
                     <button className="checkout-btn">Mua Hàng</button>
                 </div>
             </div>

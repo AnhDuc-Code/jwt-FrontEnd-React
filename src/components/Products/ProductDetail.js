@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import "./ProductDetail.scss";
 import { useLocation } from "react-router-dom";
+import ModalAddtoCart from "../Cart/ModalCart";
+
 const ProductDetail = (props) => {
     const location = useLocation();
     console.log(location);
@@ -58,7 +60,7 @@ const ProductDetail = (props) => {
                 <p className="text-description">Mô tả Sản Phẩm</p>
                 <p className="description">{location.state.description}</p>
             </div>
-
+            <ModalAddtoCart />
         </>
     )
 }
