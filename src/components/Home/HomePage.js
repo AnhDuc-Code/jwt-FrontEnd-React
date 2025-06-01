@@ -46,7 +46,8 @@ const HomePage = () => {
                             console.log(item, index);
 
                             return <div className="oneObject" key={item.idProduct}>
-                                <Product idProduct={item.idProduct} image={item.image} title={item.title} price={item.price} brand={item.brand} description={item.description} category={item.category} />
+                                <Product idProduct={item.idProduct} image={item.image} title={item.title} price={item.price}
+                                    brand={item.brand} description={item.description} category={item.category} quantity={item.quantity} />
                             </div>
                         })
                     }

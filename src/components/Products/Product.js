@@ -1,7 +1,5 @@
 import "./Product.scss"
-import ProductDetail from "./ProductDetail";
-import imgtest from "./testSrc/1.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalAddtoCart from "../Cart/ModalCart";
 import { addToCart } from "../../ServiceAxios/cartService";
 import { toast } from 'react-toastify';
@@ -13,12 +11,14 @@ const Product = (props) => {
         navigate('/productDetail', {
             state:
             {
+                idProduct: props.idProduct,
                 image: props.image,
                 title: props.title,
                 price: props.price,
                 description: props.description,
                 brand: props.brand,
-                category: props.category
+                category: props.category,
+                quantity: props.quantity
             }
         });
     }
@@ -47,12 +47,21 @@ const Product = (props) => {
 
     const handleClose = () => {
         setShowModal(false);
+        setNumBuy(1);
         // setShowModalCreate(false);
-        // setDataItem({});
         // setDataCreateUser(defaultData);
         // setDataUpdateUser(defaultData);
     }
-
+    const handleSetNumNuy = async (value) => {
+        if (value && value === "UP" && numBuy < 10) {
+            setNumBuy(numBuy + 1);
+            return;
+        }
+        if (value && value === "DOWN" && numBuy > 1) {
+            setNumBuy(numBuy - 1);
+            return;
+        }
+    }
     return (
         <>
             <div className="product">
@@ -74,7 +83,7 @@ const Product = (props) => {
                 <button className="addToCart-home btn" onClick={() => showModalCart()}>Thêm vào giỏ hàng</button>
             </div>
             <ModalAddtoCart show={showModal} handleClose={handleClose} addTCart={addTCart}
-                imagePreview={props.image} title={props.title} category={props.category} setNumBuy={setNumBuy} price={props.price} numBuy={numBuy} />
+                imagePreview={props.image} title={props.title} category={props.category} setNumBuy={setNumBuy} price={props.price} numBuy={numBuy} handleSetNumNuy={handleSetNumNuy} />
         </>
     )
 }

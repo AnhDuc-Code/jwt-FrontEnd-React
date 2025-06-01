@@ -11,7 +11,9 @@ const getProductsFiltered = async (page, filtered) => {
 const addToCart = async (data) => {
     return await axios.post(`api/cart/product`, data);
 }
-
+const deleteInCart = async (data) => {
+    return await axios.delete(`api/cart/delete`, { data: data });
+}
 export {
-    getCartService, addToCart
+    getCartService, addToCart, deleteInCart
 }

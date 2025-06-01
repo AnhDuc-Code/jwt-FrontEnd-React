@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import "./ModalCart.scss";
+
 const ModalAddtoCart = (props) => {
     // const [totalPrice, setTotalPrice] = useState();
     // const [numberProducts, setNumberProducts] = useState();
@@ -39,13 +40,17 @@ const ModalAddtoCart = (props) => {
                             </span>
                             <span className="text_bd">
                                 <label>Phân loại: {props.category}</label><br />
-                                <label for="numBuy">Số lượng: </label>
-                                <input type='number' id='numBuy' min={1} max={10} defaultValue={1} onChange={(event) => { props.setNumBuy(event.target.value) }} /><br />
                                 <label>Giá tiền: {props.price}</label>
+                                <br />
+                                <span>
+                                    <button className="setNumBuy1" onClick={() => { props.handleSetNumNuy("DOWN") }}>-</button>
+                                    <label type='number' id='numBuy' className="setNumBuy" defaultValue={1} >{props.numBuy}</label>
+                                    <button className="setNumBuy2" onClick={() => { props.handleSetNumNuy("UP") }}>+</button>
+                                </span>
                             </span>
                         </div>
                         <hr />
-                        <label className={'col-12'}>Tổng tiền: {Number(props.numBuy * props.price).toLocaleString()}</label>
+                        <b className={'col-12'}>Tổng tiền: {Number(props.numBuy * props.price).toLocaleString()}</b>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

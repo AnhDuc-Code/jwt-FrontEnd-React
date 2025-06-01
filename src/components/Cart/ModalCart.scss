@@ -13,4 +13,43 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    .setNumBuy1 {
+        width: 35px;
+        padding: 6px 0px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        text-align: center;
+    }
+
+    .setNumBuy {
+        width: 60px;
+        padding: 6px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        text-align: center;
+    }
+
+    .setNumBuy2 {
+        width: 35px;
+        padding: 6px 0px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        text-align: center;
+    }
+
+    .setNumBuy:focus {
+        border-color: #3b82f6;
+        /* màu xanh nhẹ */
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
 }
