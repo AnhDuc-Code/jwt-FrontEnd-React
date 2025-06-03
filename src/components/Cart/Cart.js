@@ -11,6 +11,23 @@ const Cart = () => {
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [dataDelete, setDataDelete] = useState({});
     // const [numBuy, setNumBuy] = useState(1);
+    const [checkedItems, setCheckedItems] = useState({});
+    useEffect(() => {
+        if (cartItems.length > 0) {
+            const checked = {};
+            cartItems.forEach(item => {
+                checked[item.idCart] = false;
+            });
+            setCheckedItems(checked);
+            console.log("check cb", cartItems);//check cb {undefined: false}
+        }
+    }, [cartItems]);
+
+    // const [dataBuy, setDataBuy] = useState({ defaultDataBuy });
+
+    // const defaultDataBuy = {
+    //     idProduct: ""
+    // }
 
     const getCartProducts = async () => {
         try {
@@ -62,6 +79,19 @@ const Cart = () => {
         setShowModalDelete(false);
         setDataDelete({});
     }
+
+    const handleCheckboxChange = (idProduct) => {
+        setCheckedItems(prev => ({
+            ...prev,
+            [idProduct]: !prev[idProduct],
+        }));
+    };
+
+
+    const handleBuyItem = async (item) => {
+        // setDataBuy();
+    }
+
     return (
         <>
             <div className="cart container">
@@ -69,7 +99,7 @@ const Cart = () => {
                 <table className="cart_tb table">
                     <thead>
                         <tr className="cart-header">
-
+                            <td></td>
                             <td>Sản Phẩm</td>
                             <td>Tên Sản Phẩm</td>
                             <td></td>
@@ -83,6 +113,8 @@ const Cart = () => {
                         {cartItems.map((item, index) => {
                             return (
                                 <tr key={item.idCart} className="cart-item">
+                                    <td><input type="checkbox" checked={checkedItems[item.idCart] || false}
+                                        onChange={() => handleCheckboxChange(item.idCart)} /></td>
                                     <td>
                                         <img src={`http://localhost:9000${item.Product.image}`} alt={"ảnh sp"} style={{
                                             width: '100px',
@@ -111,13 +143,13 @@ const Cart = () => {
                     </tbody>
 
 
-                    <tfoot className="cart-footer">
-                        <tr>
+                    <tfoot>
+                        <tr className="cart-footer">
                             <td> <input type="checkbox" /></td>
-                            <td>  <span>Chọn Tất Cả</span></td>
-                            <td>  <button>Xoá sp đã chọn</button></td>
-                            <td> <span>Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong></span></td>
-                            <td>  <button className="checkout-btn">Mua Hàng</button></td>
+                            <td> <span>Chọn Tất Cả</span></td>
+                            <td></td>
+                            <td> <span>Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong></span> </td>
+                            <td> <button className="checkout-btn" onClick={handleBuyItem}>Mua Hàng</button> </td>
                         </tr>
                     </tfoot>
                 </table>
