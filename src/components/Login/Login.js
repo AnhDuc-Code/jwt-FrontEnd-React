@@ -60,7 +60,7 @@ const Login = () => {
 
             if (+response.EC === 0) {
                 toast.success(response.EM);
-                navigate("/user");
+                navigate("/");
                 const keySession = {
                     isAuthenticated: true,
                     token: "fake token"
@@ -96,7 +96,7 @@ const Login = () => {
                         <h1 style={{ color: "#7777FF" }}>ĐĂNG NHẬP</h1>
                         <input type="text" className={isValidLogin.emailValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Email address" onChange={(event) => { setEmail(event.target.value) }} />
                         <input type="password" className={isValidLogin.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
-                        <button className="btn btn-primary " type="submit" onClick={(event) => { handleLogin(); event.preventDefault(); }}
+                        <button className="blogin btn btn-primary " type="submit" onClick={(event) => { handleLogin(); event.preventDefault(); }}
                         >Đăng Nhập</button>
                         <hr />
                         <ins>Quên mật khẩu?</ins><br />

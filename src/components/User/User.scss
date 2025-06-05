@@ -15,3 +15,15 @@ table {
         }
     }
 }
+
+.badd,
+.bfix,
+.bdel {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-1px);
+        /* nổi lên nhẹ */
+    }
+}

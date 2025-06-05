@@ -125,7 +125,7 @@ const User = () => {
         <>
             <div className="User-container container">
                 <div>
-                    <button className="btn btn-primary my-3" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>
+                    <button className="badd btn btn-primary my-3" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>
                         Add New User
                     </button>
                 </div>
@@ -153,12 +153,12 @@ const User = () => {
                                                 <td style={{ flex: 2 }}>{item.phone}</td>
                                                 <td style={{ flex: 2 }}>{item.Role ? item.Role.roleName : "null"}</td>
                                                 <td style={{ flex: 2 }}>
-                                                    <button className="btn btn-warning me-2" onClick={() => {
+                                                    <button className="bfix btn btn-warning me-2" onClick={() => {
                                                         setShowModalCreate(true);
                                                         setAction("UPDATE");
                                                         setDataUpdateUser(item);
-                                                    }}>Edit</button>
-                                                    <button className="btn btn-danger" onClick={() => deleteUser({ item })}>Delete</button>
+                                                    }}>Sửa</button>
+                                                    <button className="bdel btn btn-danger bi-trash" onClick={() => deleteUser({ item })}>Xóa</button>
                                                 </td>
                                             </tr>
                                         )

@@ -44,7 +44,7 @@ const Home = (props) => {
 
                                 {/* Giỏ hàng bên phải */}
                                 <Nav className='ms-auto me-3'>
-                                    <NavLink to="cart" className="nav-link">🛒 Giỏ hàng</NavLink>
+                                    <NavLink to="cart" className="nav-link"><i className="bi bi-cart4"></i> Giỏ hàng</NavLink>
                                 </Nav>
                             </div>
 

@@ -116,7 +116,7 @@ const Signup = () => {
                     <input type="number" className={isValidObject.phoneValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Số điện thoại" onChange={(event) => { setPhone(event.target.value) }} />
                     <input type="password" className={isValidObject.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Mật khẩu" onChange={(event) => { setPassword(event.target.value) }} />
                     <input type="password" className={isValidObject.passwordValid ? "form-control mb-3" : "form-control mb-3 is-invalid"} placeholder="Nhập lại mật khẩu" onChange={(event) => { setReEnterPassword(event.target.value) }} />
-                    <button className="btn btn-primary " onClick={() => { handleSignup() }}>Đăng Ký</button>
+                    <button className="bsignup btn btn-primary " onClick={() => { handleSignup() }}>Đăng Ký</button>
                     <hr />
                     <Link to={"/login"}>Quay lại đăng nhập</Link><br />
                 </div>

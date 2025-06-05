@@ -14,6 +14,10 @@ const addToCart = async (data) => {
 const deleteInCart = async (data) => {
     return await axios.delete(`api/cart/delete`, { data: data });
 }
+
+const buyItem = async (data) => {
+    return await axios.post(`api/cart/bill`, data);
+}
 export {
-    getCartService, addToCart, deleteInCart
+    getCartService, addToCart, deleteInCart, buyItem
 }

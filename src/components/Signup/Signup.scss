@@ -27,7 +27,16 @@
         border-radius: 5px;
         padding: 10px;
         box-shadow: 10px 10px 5px rgba(0, 0, 0, 10%);
-        // text-align: center;
 
+        // text-align: center;
+        .bsignup {
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+                transform: translateY(-1px);
+                /* nổi lên nhẹ */
+            }
+        }
     }
 }

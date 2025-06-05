@@ -3,6 +3,8 @@ import { getProductsService, createProduct, deleteProductWithId } from "../../Se
 import ModalProductActions from "./ModalProductActions";
 import ModalDelete from "./ModalDelete";
 import { toast } from 'react-toastify';
+import "./Seller.scss"
+
 const Seller = () => {
     const [listProducts, setListProducts] = useState([]);
     const [showModalActions, setShowModalActions] = useState(false);
@@ -98,7 +100,7 @@ const Seller = () => {
         <>
             <div className="Seller-container container">
                 <div>
-                    <button className="btn btn-primary my-3" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>
+                    <button className="badd btn btn-primary my-3" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>
                         Thêm sản phẩm bán
                     </button>
                 </div>
@@ -136,12 +138,12 @@ const Seller = () => {
                                                 <td style={{ flex: 2 }}>{item.quantity}</td>
                                                 <td style={{ flex: 2 }}>{item.price}</td>
                                                 <td style={{ flex: 2 }}>
-                                                    <button className="btn btn-warning me-2" onClick={() => {
+                                                    <button className="bfix btn btn-warning me-2" onClick={() => {
                                                         setShowModalActions(true);
                                                         setAction("UPDATE");
                                                         setDataUpdate(item);
                                                     }}>Sửa</button>
-                                                    <button className="btn btn-danger" onClick={() => deleteProduct({ item })}>Xóa</button>
+                                                    <button className="bdel btn btn-danger" onClick={() => deleteProduct({ item })}>Xóa</button>
                                                 </td>
                                             </tr>
                                         )
