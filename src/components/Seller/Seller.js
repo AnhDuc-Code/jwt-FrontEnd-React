@@ -79,7 +79,7 @@ const Seller = () => {
 
     const confirmDeleteProduct = async () => {
         let response = await deleteProductWithId(dataDelete.item);
-        if (response && response.EC === 0) {
+        if (response && +response.EC === 0) {
             toast.success(response.EM);
             getProducts();
         } else {
@@ -100,21 +100,30 @@ const Seller = () => {
         <>
             <div className="Seller-container container">
                 <div>
-                    <button className="badd btn btn-primary my-3" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>
-                        Thêm sản phẩm bán
+                    <button className="badd btn btn-primary my-3 bi-plus-circle" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>  Thêm sản phẩm bán
                     </button>
                 </div>
-                <table className="table table-hover table-bordered">
+                <table className="table table-bordered table-hover" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse', textAlign: "center" }}>
+                    <colgroup>
+                        <col style={{ width: '140px' }} />
+                        <col style={{ width: '15%' }} />
+                        <col style={{ width: '25%' }} />
+                        <col style={{ width: '9%' }} />
+                        <col style={{ width: '9%' }} />
+                        <col style={{ width: '9%' }} />
+                        <col style={{ width: '9%' }} />
+                        <col style={{ width: '14%' }} />
+                    </colgroup>
                     <thead>
-                        <tr className="d-flex">
-                            <th style={{ flex: 2 }}>Ảnh</th>
-                            <th style={{ flex: 3 }}>Tên SP</th>
-                            <th style={{ flex: 3 }}>Mô tả</th>
-                            <th style={{ flex: 2 }}>Phân loại</th>
-                            <th style={{ flex: 2 }}>Hãng</th>
-                            <th style={{ flex: 2 }}>Số lượng</th>
-                            <th style={{ flex: 2 }}>Giá</th>
-                            <th style={{ flex: 2 }}>thao tác</th>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên SP</th>
+                            <th>Mô tả</th>
+                            <th>Phân loại</th>
+                            <th>Hãng</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,27 +132,27 @@ const Seller = () => {
                                 <>
                                     {listProducts.map((item, index) => {
                                         return (
-                                            <tr className="d-flex" key={index}>
-                                                <td style={{ flex: 2 }}><img src={`http://localhost:9000${item.image}`} style={{
+                                            <tr key={index}>
+                                                <td><img src={`http://localhost:9000${item.image}`} style={{
                                                     width: '125px',
                                                     height: '125px',
                                                     objectFit: 'cover',
                                                     border: '1px solid #ccc',
                                                     borderRadius: '8px'
                                                 }} /></td>
-                                                <td style={{ flex: 3 }}>{item.title}</td>
-                                                <td style={{ flex: 3 }}>{item.description}</td>
-                                                <td style={{ flex: 2 }}>{item.category}</td>
-                                                <td style={{ flex: 2 }}>{item.brand}</td>
-                                                <td style={{ flex: 2 }}>{item.quantity}</td>
-                                                <td style={{ flex: 2 }}>{item.price}</td>
-                                                <td style={{ flex: 2 }}>
-                                                    <button className="bfix btn btn-warning me-2" onClick={() => {
+                                                <td>{item.title}</td>
+                                                <td className="description-text">{item.description}</td>
+                                                <td>{item.category}</td>
+                                                <td>{item.brand}</td>
+                                                <td>{Number(item.quantity).toLocaleString()}</td>
+                                                <td>{item.price}</td>
+                                                <td>
+                                                    <button className="bfix btn btn-warning bi-pencil-square me-2" onClick={() => {
                                                         setShowModalActions(true);
                                                         setAction("UPDATE");
                                                         setDataUpdate(item);
-                                                    }}>Sửa</button>
-                                                    <button className="bdel btn btn-danger" onClick={() => deleteProduct({ item })}>Xóa</button>
+                                                    }}>  Sửa</button>
+                                                    <button className="bdel btn btn-danger bi-trash" onClick={() => deleteProduct({ item })}>  Xóa</button>
                                                 </td>
                                             </tr>
                                         )

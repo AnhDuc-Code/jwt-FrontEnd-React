@@ -74,16 +74,12 @@
     .cart_tb {
         padding: 20px;
         background: #fff;
+        text-align: center;
 
         .cart-header,
         .cart-item {
-            display: grid;
-            grid-template-columns: 30px 120px 350px 1fr 150px 150px 150px 120px;
-            align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
-            text-align: center;
-
 
             .item-info {
                 padding: 0 10px;
@@ -115,13 +111,8 @@
         }
 
         .cart-footer {
-            display: grid;
-            grid-template-columns: 30px 120px 1fr 400px 270px;
-            align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
-            text-align: center;
-
 
             .checkout-btn {
                 background-color: #ee4d2d;

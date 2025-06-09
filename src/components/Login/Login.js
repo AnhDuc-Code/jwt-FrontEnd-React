@@ -80,8 +80,8 @@ const Login = () => {
                     <h4>Dự án Phân quyền JWT</h4>
                     <p>
                         Dự án được thiết kế<br />
-                        FrontEnd với React 18.2 + Bootstrap5<br />
-                        BackEnd với Nodejs Javascript<br />
+                        FrontEnd với React v18.2 + Bootstrap5<br />
+                        BackEnd với Nodejs v20.11.1 Javascript<br />
                     </p>
                 </div>
                 <div className="right-content text-center" >

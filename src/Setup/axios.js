@@ -48,6 +48,7 @@ instance.interceptors.response.use(function (response) {
             return Promise.reject(error)
         }
         case 404: {
+            toast.error("Không thấy đường dẫn");
             return Promise.reject(error)
         }
         case 405: {

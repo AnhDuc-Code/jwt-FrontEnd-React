@@ -33,13 +33,13 @@ const ModalUser = (props) => {
             <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.showModalCreate} >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modalUser-title">
-                        {props.action === "CREATE" ? "CREATE NEW USER" : "UPDATE USER"}
+                        {props.action === "CREATE" ? "TẠO NGƯỜI DÙNG MỚI" : "SỬA THÔNG TIN NGƯỜI DÙNG"}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='modal-body row'>
                         <div className='form-group col-6'>
-                            <label className={''}>Username(<span className='red'>*</span>)</label>
+                            <label className={''}>Tên(<span className='red'>*</span>)</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "username": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
@@ -47,26 +47,26 @@ const ModalUser = (props) => {
                             <input className={'form-control'} type='email' onChange={(event) => { props.handleOnchangeDataUser({ "email": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Phone</label>
+                            <label className={''}>Số điện thoại</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "phone": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Gender</label>
+                            <label className={''}>Giới tính</label>
                             <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "gender": event.target.value }) }}>
-                                <option value={'None'} defaultValue>-none-</option>
-                                <option value={'Female'} >Female</option>
-                                <option value={'Male'}>Male</option>
+                                <option value={'None'} defaultValue>-tạm không-</option>
+                                <option value={'Female'} >Nữ</option>
+                                <option value={'Male'}>Nam</option>
                             </select>
                         </div>
                         <div className='form-group col-12'>
-                            <label className={''}>Address</label>
+                            <label className={''}>Địa chỉ</label>
                             <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "address": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             {
                                 (props.action === "CREATE") &&
                                 <>
-                                    <label className={''}>Password(<span className='red'>*</span>)</label>
+                                    <label className={''}>Mật khẩu(<span className='red'>*</span>)</label>
                                     <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "password": event.target.value }) }} />
                                 </>
                             }

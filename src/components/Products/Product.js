@@ -68,15 +68,14 @@ const Product = (props) => {
 
                 <div onClick={() => { toProductDetail(); }}>
                     <img className="product-img" alt="product" src={`http://localhost:9000${props.image}`} style={{
-                        width: '200px',
-                        height: '200px',
+                        width: '190px',
+                        height: '190px',
                         objectFit: 'cover',
                         border: '1px solid #ccc',
                         borderRadius: '8px'
                     }} />
                     <div className="product-detail-home">
                         <p className="product-title-home">{props.title}</p>
-                        <p>{props.brand}</p>
                         <p className="product-price-home">{props.price}</p>
                     </div>
                 </div>

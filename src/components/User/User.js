@@ -125,19 +125,26 @@ const User = () => {
         <>
             <div className="User-container container">
                 <div>
-                    <button className="badd btn btn-primary my-3" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>
-                        Add New User
+                    <button className="badd btn btn-primary my-3 bi-plus-circle" onClick={() => { setShowModalCreate(true); setAction("CREATE") }}>  Thêm người dùng
                     </button>
                 </div>
-                <table className="table table-hover table-bordered">
+                <table className="table table-hover table-bordered" style={{ width: "100%", tableLayout: "fixed", borderCollapse: "collapse" }}>
+                    <colgroup>
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "20%" }} />
+                        <col style={{ width: "20%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                    </colgroup>
                     <thead>
-                        <tr className="d-flex">
-                            <th style={{ flex: 2 }}>Tài khoản</th>
-                            <th style={{ flex: 3 }}>Email</th>
-                            <th style={{ flex: 3 }}>Địa chỉ</th>
-                            <th style={{ flex: 2 }}>Số điện thoại</th>
-                            <th style={{ flex: 2 }}>Chức vụ</th>
-                            <th style={{ flex: 2 }}>Thao tác</th>
+                        <tr>
+                            <th >Tài khoản</th>
+                            <th >Email</th>
+                            <th >Địa chỉ</th>
+                            <th >Số điện thoại</th>
+                            <th >Chức vụ</th>
+                            <th >Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -146,19 +153,19 @@ const User = () => {
                                 <>
                                     {listUsers.map((item, index) => {
                                         return (
-                                            <tr className="d-flex" key={index}>
-                                                <td style={{ flex: 2 }}>{item.username}</td>
-                                                <td style={{ flex: 3 }}>{item.email}</td>
-                                                <td style={{ flex: 3 }}>{item.address}</td>
-                                                <td style={{ flex: 2 }}>{item.phone}</td>
-                                                <td style={{ flex: 2 }}>{item.Role ? item.Role.roleName : "null"}</td>
-                                                <td style={{ flex: 2 }}>
-                                                    <button className="bfix btn btn-warning me-2" onClick={() => {
+                                            <tr key={index}>
+                                                <td >{item.username}</td>
+                                                <td >{item.email}</td>
+                                                <td className="address-text" >{item.address}</td>
+                                                <td >{item.phone}</td>
+                                                <td >{item.Role ? item.Role.roleName : "null"}</td>
+                                                <td >
+                                                    <button className="bfix btn btn-warning bi-pencil-square me-2" onClick={() => {
                                                         setShowModalCreate(true);
                                                         setAction("UPDATE");
                                                         setDataUpdateUser(item);
-                                                    }}>Sửa</button>
-                                                    <button className="bdel btn btn-danger bi-trash" onClick={() => deleteUser({ item })}>Xóa</button>
+                                                    }}>  Sửa</button>
+                                                    <button className="bdel btn btn-danger bi-trash" onClick={() => deleteUser({ item })}>  Xóa</button>
                                                 </td>
                                             </tr>
                                         )

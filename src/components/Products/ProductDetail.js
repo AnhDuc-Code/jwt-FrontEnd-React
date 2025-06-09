@@ -89,7 +89,7 @@ const ProductDetail = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="container">
+            <div className="description-context container">
                 <p className="text-description">Mô tả Sản Phẩm</p>
                 <p className="description">{location.state.description}</p>
             </div>

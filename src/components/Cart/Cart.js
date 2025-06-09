@@ -96,11 +96,14 @@ const Cart = () => {
                 if (+response.EC === 0) {
                     toast.success(response.EM);
                     getCartProducts();
-                } else {
+                } else if (+response.EC === 3) {
+                    toast.warning(response.EM);
+                }
+                else {
                     toast.error(response.EM);
                 }
             } catch (error) {
-                toast.error(`🚨❌ Lỗi hệ thống khi xử lý sản phẩm: ${item.Product.title}`);
+                toast.error(`🚨❌ Lỗi hệ thống FE khi xử lý sản phẩm: ${item.Product.title}`);
             }
         }
     }
@@ -111,11 +114,21 @@ const Cart = () => {
                     <h2><i className="bi bi-cart4"></i><p className="cart-tt-text">Giỏ Hàng</p></h2>
                     <NavLink type="button" className="tobill" to="/bill"><p className="tobill-text"><i className="tobill-icon bi-receipt-cutoff">   </i>Lịch sử mua hàng</p></NavLink>
                 </div>
-                <table className="cart_tb table">
+                <table className="cart_tb table" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse' }}>
+                    <colgroup>
+                        <col style={{ width: '3%' }} />
+                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '25%' }} />
+                        <col style={{ width: '17%' }} />
+                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '15%' }} />
+                        <col style={{ width: '10%' }} />
+                    </colgroup>
                     <thead>
                         <tr className="cart-header">
                             <td></td>
-                            <td>Sản Phẩm</td>
+                            <td>Ảnh Sản Phẩm</td>
                             <td>Tên Sản Phẩm</td>
                             <td></td>
                             <td>Đơn Giá</td>
@@ -125,44 +138,66 @@ const Cart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cartItems.map((item, index) => {
-                            return (
-                                <tr key={item.idCart} className="cart-item">
-                                    <td><input type="checkbox" checked={checkedItems[item.idCart] || false}
-                                        onChange={() => handleCheckboxChange(item.idCart)} /></td>
-                                    <td>
-                                        <img src={`http://localhost:9000${item.Product.image}`} alt={"ảnh sp"} style={{
+                        {cartItems.map((item) => (
+                            <tr key={item.idCart} className="cart-item">
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[item.idCart] || false}
+                                        onChange={() => handleCheckboxChange(item.idCart)}
+                                    />
+                                </td>
+                                <td>
+                                    <img
+                                        src={`http://localhost:9000${item.Product.image}`}
+                                        alt="ảnh sản phẩm"
+                                        style={{
                                             width: '100px',
                                             height: '100px',
                                             objectFit: 'cover',
                                             border: '1px solid #ccc',
-                                            borderRadius: '8px'
-                                        }} /></td>
-                                    <td className="item-info">
-                                        <p>{item.Product.title}</p>
-                                        <p>Phân Loại: {item.Product.category}</p>
-                                    </td>
-                                    <td></td>
-                                    <td className="item-price">{Number(item.Product.price).toLocaleString()}₫</td>
-                                    <td className="item-quantity">
-                                        <input type="text" value={item.numBuy} readOnly />
-                                    </td>
-                                    <td className="item-total">{(item.Product.price * item.numBuy).toLocaleString()}₫</td>
-                                    <td><button className="delete-btn" onClick={() => { showDelete(item) }}>Xoá</button></td>
-                                </tr>
-                            )
-                        }
-                        )}
+                                            borderRadius: '8px',
+                                        }}
+                                    />
+                                </td>
+                                <td className="item-info">
+                                    <p style={{ fontWeight: 'bold', paddingTop: "1rem" }}>{(item.Product.title !== null) ? item.Product.title : "Sản phẩm đã bị xóa"}</p>
+                                    <p style={{ fontSize: '14px', color: '#555' }}>
+                                        Phân Loại: {item.Product.category}
+                                    </p>
+                                </td>
+                                <td></td>
+                                <td className="item-price">{Number(item.Product.price).toLocaleString()}₫</td>
+                                <td className="item-quantity">
+                                    <input type="text" value={item.numBuy} readOnly />
+                                </td>
+                                <td className="item-total" style={{ fontWeight: 'bold' }}>
+                                    {(item.Product.price * item.numBuy).toLocaleString()}₫
+                                </td>
+                                <td>
+                                    <button className="delete-btn text-danger" onClick={() => showDelete(item)}>
+                                        Xoá
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
-
 
                     <tfoot>
                         <tr className="cart-footer">
-                            <td> <input type="checkbox" /></td>
-                            <td> <span>Chọn Tất Cả</span></td>
-                            <td></td>
-                            <td> <span>Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong></span> </td>
-                            <td> <button className="checkout-btn" onClick={() => { handleBuyItem() }}>Mua Hàng</button> </td>
+                            <td><input type="checkbox" /></td>
+                            <td>Chọn Tất Cả</td>
+                            <td colSpan={2}></td>
+                            <td colSpan={2}>
+                                <span>
+                                    Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong>
+                                </span>
+                            </td>
+                            <td>
+                                <button className="checkout-btn btn btn-primary" onClick={handleBuyItem}>
+                                    Mua Hàng
+                                </button>
+                            </td>
                         </tr>
                     </tfoot>
                 </table>

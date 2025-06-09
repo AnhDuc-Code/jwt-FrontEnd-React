@@ -1,4 +1,9 @@
 import axios from "../Setup/axios";
+
+const reqCheckJWT = async () => {
+    return await axios.get("api/checkJWT");
+}
+
 const createUser = async (email, username, phone, password) => {
     return await axios.post("api/signup", { email, username, phone, password });
 }
@@ -29,5 +34,6 @@ const readRoles = () => {
 }
 
 export {
+    reqCheckJWT,
     createUser, loginUser, readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles
 }

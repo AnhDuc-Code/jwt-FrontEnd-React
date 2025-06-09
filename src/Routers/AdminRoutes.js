@@ -23,34 +23,6 @@ const router = createBrowserRouter([
                 index: true,
                 element: <HomePage />
             },
-
-            {
-                path: "cart",
-                element: <Cart />
-            },
-            {
-                path: "seller",
-                element: <Seller />
-            },
-            {
-                path: "product",
-                element: <Product />
-            },
-            {
-                path: "productDetail",
-                element: <ProductDetail />
-            },
-
-            {
-                path: "admin",
-                element: <PrivateRoutes>
-                    <Admin />
-                </PrivateRoutes>
-            },
-            {
-                path: "user",
-                element: <PrivateRoutes><User /></PrivateRoutes>
-            },
             {
                 path: "login",
                 element: <Login />
@@ -60,10 +32,40 @@ const router = createBrowserRouter([
                 element: <Signup />
             },
             {
+                element: <PrivateRoutes />, // Bọc các route cần bảo vệ
+                children: [
+                    {
+                        path: "cart",
+                        element: <Cart />
+                    },
+                    {
+                        path: "seller",
+                        element: <Seller />
+                    },
+                    {
+                        path: "product",
+                        element: <Product />
+                    },
+                    {
+                        path: "productDetail",
+                        element: <ProductDetail />
+                    },
+                    {
+                        path: "admin",
+                        element: <Admin />
+                    },
+                    {
+                        path: "user",
+                        element: <User />
+                    },
+                ]
+            },
+            {
                 path: "*",
-                element: "404 not found!!!"
+                element: <>404 not found!!!</>
             }
-        ], future: {
+        ],
+        future: {
             v7_startTransition: true,
             v7_relativeSplatPath: true,
             v7_fetcherPersist: true,
@@ -72,6 +74,5 @@ const router = createBrowserRouter([
             v7_skipActionErrorRevalidation: true,
         },
     }
-
 ]);
 export default router;
