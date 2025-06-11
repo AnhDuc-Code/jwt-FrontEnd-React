@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useEffect, useState } from 'react';
+import { reqCheckJWT } from '../../ServiceAxios/userService';
 // import "./Header.scss";
 
 const Home = (props) => {
@@ -16,17 +17,18 @@ const Home = (props) => {
 
     const [isAuthen, setIsAuthen] = useState(false);
     useEffect(() => {
-        let keySession = sessionStorage.getItem('key');
-        let dataKey = JSON.parse(keySession);
-        if (dataKey) {
-            setIsAuthen(true);
-            // window.location.reload();
-        }
+        checkAuthen();
     }, [])
+
+    const checkAuthen = async () => {
+        let response = await reqCheckJWT();
+        if (response && +response.EC !== -1) {
+            setIsAuthen(true);
+        }
+    }
+
     return (
         <>
-
-
             <Navbar expand="lg" className="mynav bg-body-tertiary ">
                 <Container className='bodynav' style={{ background: '#FFFFFF' }}>
                     <Navbar.Brand as={NavLink} to="/">My App</Navbar.Brand>
@@ -47,8 +49,8 @@ const Home = (props) => {
                                     <NavLink to="cart" className="nav-link"><i className="bi bi-cart4"></i> Giỏ hàng</NavLink>
                                 </Nav>
                             </div>
-
                         }
+
                         {!isAuthen &&
                             <Nav className="ms-auto">
                                 <span>
@@ -59,7 +61,6 @@ const Home = (props) => {
                                 </span>
                             </Nav>
                         }
-
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

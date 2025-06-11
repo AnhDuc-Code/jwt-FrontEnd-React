@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.scss"
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { toast } from 'react-toastify';
 import { loginUser } from "../../ServiceAxios/userService"
 const Login = () => {
@@ -21,10 +20,10 @@ const Login = () => {
         // axios.get("http://localhost:9000/api/").then((data) => {
         //     console.log("lấy được thông tin nhân viên", data);
         // })
-        const checkSessionKey = sessionStorage.getItem("key");
-        if (checkSessionKey) {
-            navigate("/");
-        }
+        // const checkSessionKey = sessionStorage.getItem("key");
+        // if (checkSessionKey) {
+        //     navigate("/");
+        // }
     }, [])
 
     const isValid = () => {
@@ -61,11 +60,11 @@ const Login = () => {
             if (+response.EC === 0) {
                 toast.success(response.EM);
                 navigate("/");
-                const keySession = {
-                    isAuthenticated: true,
-                    token: "fake token"
-                }
-                sessionStorage.setItem("key", JSON.stringify(keySession));
+                // const keySession = {
+                //     isAuthenticated: true,
+                //     token: "fake token"
+                // }
+                // sessionStorage.setItem("key", JSON.stringify(keySession));
             } else {
                 toast.error(response.EM);
                 return;

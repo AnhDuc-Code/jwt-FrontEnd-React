@@ -112,7 +112,7 @@ const Cart = () => {
             <div className="cart container">
                 <div className="cart-title">
                     <h2><i className="bi bi-cart4"></i><p className="cart-tt-text">Giỏ Hàng</p></h2>
-                    <NavLink type="button" className="tobill" to="/bill"><p className="tobill-text"><i className="tobill-icon bi-receipt-cutoff">   </i>Lịch sử mua hàng</p></NavLink>
+                    <NavLink type="button" className="tobill" to="/orderHistory"><p className="tobill-text"><i className="tobill-icon bi-receipt-cutoff">   </i>Lịch sử mua hàng</p></NavLink>
                 </div>
                 <table className="cart_tb table" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse' }}>
                     <colgroup>
