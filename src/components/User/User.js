@@ -175,7 +175,7 @@ const User = () => {
                                 :
                                 <>
                                     <tr>
-                                        <td>
+                                        <td colSpan={6}>
                                             Không có bản ghi nào
                                         </td>
                                     </tr>

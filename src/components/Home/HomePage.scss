@@ -4,8 +4,11 @@
 
 .Homepage_content {
     .Homepage_content_right {
+        width: 1270px;
         display: flex;
         flex-wrap: wrap;
-        gap: 30px;
+        gap: 18px;
+        overflow-y: auto;
+        max-height: calc(100vh - 60px);
     }
 }

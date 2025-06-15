@@ -6,6 +6,15 @@
     padding: 15px;
     border-radius: 10px;
 
+    position: sticky;
+    top: 70px;
+    /* Phải bằng chiều cao Header */
+    align-self: flex-start;
+    height: fit-content;
+    z-index: 10;
+
+
+
 
     .category-list span {
         font-size: 1.2rem;

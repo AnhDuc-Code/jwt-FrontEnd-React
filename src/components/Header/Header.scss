@@ -1,7 +1,27 @@
-.mynav {
-    background-color: #000000 !important;
+// .mynav {
+//     background-color: #000000 !important;
 
-    .bodynav {
-        background-color: #000000 !important;
-    }
+//     .bodynav {
+//         background-color: #000000 !important;
+//     }
+// }
+
+.info-menu {
+    font-size: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    margin-left: 20px;
 }
+
+.menu {
+    display: flex;
+    flex-direction: column !important;
+    width: 220px;
+    padding-left: 3px;
+}
+
+// &:hover {
+//     background: #f5f5f5;
+//     border-radius: 6px;
+//     color: #0d6efd !important;
+// }

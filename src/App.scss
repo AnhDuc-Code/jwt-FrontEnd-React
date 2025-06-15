@@ -10,6 +10,9 @@ body {
 
 .Header-container {
   background-color: #FFFFFF;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
 }
 

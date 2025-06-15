@@ -140,12 +140,12 @@ const Seller = () => {
                                                     border: '1px solid #ccc',
                                                     borderRadius: '8px'
                                                 }} /></td>
-                                                <td>{item.title}</td>
-                                                <td className="description-text">{item.description}</td>
+                                                <td><div className="title-text">{item.title}</div></td>
+                                                <td><div className="description-text">{item.description}</div></td>
                                                 <td>{item.category}</td>
                                                 <td>{item.brand}</td>
                                                 <td>{Number(item.quantity).toLocaleString()}</td>
-                                                <td>{item.price}</td>
+                                                <td>{Number(item.price).toLocaleString()}</td>
                                                 <td>
                                                     <button className="bfix btn btn-warning bi-pencil-square me-2" onClick={() => {
                                                         setShowModalActions(true);
@@ -162,7 +162,7 @@ const Seller = () => {
                                 :
                                 <>
                                     <tr>
-                                        <td>
+                                        <td colSpan={8}>
                                             Không có bản ghi nào
                                         </td>
                                     </tr>

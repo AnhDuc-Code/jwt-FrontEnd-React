@@ -17,14 +17,11 @@ const HomePage = () => {
     const getPageHome = async () => {
         let responseData = await getProducts();
         setDataMilks(responseData.DT.data);
-
-        console.log("check response Homepage: ", responseData.DT.data)
     };
 
     const filterMilk = async (typeMilk) => {
         console.log("check typeMilk before send Request: ", typeMilk);
         let responseData = await getProductsFiltered(1, typeMilk);
-        console.log("check response Homepage: ", responseData)
         setDataMilks(responseData.DT.data);
     }
 
@@ -43,8 +40,6 @@ const HomePage = () => {
 
                     {dataMilks && dataMilks.length > 0 &&
                         dataMilks.map((item, index) => {
-                            console.log(item, index);
-
                             return <div className="oneObject" key={item.idProduct}>
                                 <Product idProduct={item.idProduct} image={item.image} title={item.title} price={item.price}
                                     brand={item.brand} description={item.description} category={item.category} quantity={item.quantity} />

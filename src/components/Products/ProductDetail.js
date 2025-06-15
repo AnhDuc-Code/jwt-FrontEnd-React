@@ -64,7 +64,7 @@ const ProductDetail = (props) => {
                     </div>
 
                     <div className="price">
-                        <strong>Giá: {location.state.price}</strong>
+                        <strong>Giá: {Number(location.state.price).toLocaleString()}đ</strong>
                     </div>
                     <div className="brand">
                         <strong>Hãng {location.state.brand}</strong>
@@ -80,10 +80,13 @@ const ProductDetail = (props) => {
                         <b className="text-selector">Phân loại</b>
                         <div className="pack-option selected">
                             <div>
-                                <strong>{location.state.price}</strong>
+                                <strong>{Number(location.state.price).toLocaleString()}đ</strong>
                             </div>
                         </div>
                     </div>
+                    <hr />
+                    <b>Tổng tiền: {Number(numBuy * location.state.price).toLocaleString()}đ</b>
+                    <br />
                     <div className="actions">
                         <button className="btn btn-add" onClick={() => { addTCart(); }}>Thêm vào giỏ hàng</button>
                     </div>

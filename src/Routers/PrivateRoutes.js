@@ -20,7 +20,7 @@ const PrivateRoutes = (props) => {
         let response = await reqCheckJWT();
         if (response && +response.EC === -1) {
             toast.error(response.EM);
-            navigate("/login");
+            await navigate("/login");
         } else {
             setIsAuthen(true);
         }

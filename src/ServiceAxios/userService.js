@@ -33,7 +33,11 @@ const readRoles = () => {
     return axios.get("api/users/roles");
 }
 
+const logoutService = () => {
+    return axios.get("api/logout");
+}
+
 export {
     reqCheckJWT,
-    createUser, loginUser, readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles
+    createUser, loginUser, readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles, logoutService
 }

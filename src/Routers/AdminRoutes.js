@@ -33,6 +33,14 @@ const router = createBrowserRouter([
                 element: <Signup />
             },
             {
+                path: "productDetail",
+                element: <ProductDetail />
+            },
+            {
+                path: "product",
+                element: <Product />
+            },
+            {
                 element: <PrivateRoutes />, // Bọc các route cần bảo vệ
                 children: [
                     {
@@ -42,14 +50,6 @@ const router = createBrowserRouter([
                     {
                         path: "seller",
                         element: <Seller />
-                    },
-                    {
-                        path: "product",
-                        element: <Product />
-                    },
-                    {
-                        path: "productDetail",
-                        element: <ProductDetail />
                     },
                     {
                         path: "admin",

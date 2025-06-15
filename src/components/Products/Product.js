@@ -76,7 +76,7 @@ const Product = (props) => {
                     }} />
                     <div className="product-detail-home">
                         <p className="product-title-home">{props.title}</p>
-                        <p className="product-price-home">{props.price}</p>
+                        <p className="product-price-home">{Number(props.price).toLocaleString()}đ</p>
                     </div>
                 </div>
                 <button className="addToCart-home btn" onClick={() => showModalCart()}>Thêm vào giỏ hàng</button>

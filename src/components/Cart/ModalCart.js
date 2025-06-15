@@ -7,8 +7,8 @@ const ModalAddtoCart = (props) => {
     // const [totalPrice, setTotalPrice] = useState();
     // const [numberProducts, setNumberProducts] = useState();
     useEffect(() => {
-        console.log("aloha Modal add to Cart");
-    }, [props.showModal]
+        // console.log("aloha Modal add to Cart"); render nhiều (= với số sản phẩm truy xuất)
+    }, []
     )
 
 
@@ -40,7 +40,7 @@ const ModalAddtoCart = (props) => {
                             </span>
                             <span className="text_bd">
                                 <label>Phân loại: {props.category}</label><br />
-                                <label>Giá tiền: {props.price}</label>
+                                <label>Giá tiền: {Number(props.price).toLocaleString()}đ</label>
                                 <br />
                                 <span>
                                     <button className="setNumBuy1" onClick={() => { props.handleSetNumNuy("DOWN") }}>-</button>
@@ -50,7 +50,7 @@ const ModalAddtoCart = (props) => {
                             </span>
                         </div>
                         <hr />
-                        <b className={'col-12'}>Tổng tiền: {Number(props.numBuy * props.price).toLocaleString()}</b>
+                        <b className={'col-12'}>Tổng tiền: {Number(props.numBuy * props.price).toLocaleString()}đ</b>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

@@ -132,7 +132,7 @@ const Bill = () => {
                                 :
                                 <>
                                     <tr>
-                                        <td>
+                                        <td colSpan={7}>
                                             Không có bản ghi nào
                                         </td>
                                     </tr>

@@ -38,7 +38,7 @@ instance.interceptors.response.use(function (response) {
         case 401: {
             toast.error("Not Authenticated JWT! FE");
             // window.location.href = ("/login");
-            return Promise.reject(error);
+            return;
         }
         case 402: {
             return Promise.reject(error)

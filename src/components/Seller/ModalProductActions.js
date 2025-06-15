@@ -10,9 +10,17 @@ const ModelProductActions = (props) => {
 
     useEffect(() => {
         // console.log("check dataUpdateUser", props.dataUpdateUser);
-    }, [props.showModalCreate]
+        startModal();
+    }, [props.show]
     )
-
+    const startModal = async () => {
+        try {
+            await props.onchangeDataProduct({ "category": "Sữa" });
+            await props.onchangeDataProduct({ "brand": "Hãng" });
+        } catch (error) {
+            console.log("Lỗi Khởi động ModalSeller", error);
+        }
+    }
 
     return (
         <>
@@ -25,7 +33,7 @@ const ModelProductActions = (props) => {
                 <Modal.Body>
                     <div className='modal-body row'>
                         <div className="mb-3">
-                            <label for="formFile" className="form-label">Ảnh sản phẩm(<span className='red'>*</span>)</label>
+                            <label htmlFor="formFile" className="form-label">Ảnh sản phẩm(<span className='red'>*</span>)</label>
                             <input className="form-control" type="file" id="formFile" accept="image/*" onChange={props.setImage} />
                             {props.imagePreview !== null && <img src={props.imagePreview} alt='ảnh preview lỗi' style={{
                                 width: '300px',
@@ -46,11 +54,17 @@ const ModelProductActions = (props) => {
 
                         <div className='form-group col-6'>
                             <label className={''}>Phân loại</label>
-                            <input className={'form-control'} placeholder='Sữa tươi, Sữa bột,...' type='text' onChange={(event) => { props.onchangeDataProduct({ "category": event.target.value }) }} />
+                            <select className='form-select' id='idForm' onChange={(event) => { props.onchangeDataProduct({ "category": event.target.value }) }}>
+                                <option key={1} value="Sữa" defaultValue>-Loại Sữa-</option>
+                                <option key={2} value="Sữa bột">Sữa bột</option>
+                                <option key={3} value="Sữa tươi">Sữa pha sẵn</option>
+                                <option key={4} value="Bánh kẹo sữa">Bánh kẹo sữa</option>
+                                {/* <option key={3} value="Sữa tươi">Sữa tươi</option> */}
+                            </select>
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Hãng</label>
-                            <input className={'form-control'} placeholder='VinaMilk, ColosBaby,...' type='text' onChange={(event) => { props.onchangeDataProduct({ "brand": event.target.value }) }} />
+                            <input className={'form-control'} placeholder='Mặc định: Hãng' type='text' onChange={(event) => { props.onchangeDataProduct({ "brand": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Số lượng(<span className='red'>*</span>)</label>
