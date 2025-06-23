@@ -13,6 +13,7 @@ import ProductDetail from "../components/Products/ProductDetail";
 import Seller from "../components/Seller/Seller";
 import Cart from "../components/Cart/Cart";
 import Bill from "../components/History/Bill";
+import Personal from "../components/Personal/Personal";
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 element: <PrivateRoutes />, // Bọc các route cần bảo vệ
                 children: [
+                    {
+                        path: "personal",
+                        element: <Personal />
+                    },
                     {
                         path: "cart",
                         element: <Cart />

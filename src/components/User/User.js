@@ -92,6 +92,7 @@ const User = () => {
             console.log("check responce", response);
             if (response && response.EC === 0) {
                 toast.success(response.EM);
+                handleClose();
                 getUsers();
             } else {
                 toast.error(response.EM);

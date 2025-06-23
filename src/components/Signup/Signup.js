@@ -3,7 +3,7 @@ import "./Signup.scss"
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { createUser } from "../../ServiceAxios/userService";
-
+import { reqCheckJWT } from "../../ServiceAxios/userService";
 const Signup = () => {
     const [email, setEmail] = useState();
     const [username, setUsername] = useState();
@@ -90,13 +90,18 @@ const Signup = () => {
         // })
 
     }
-
+    const [isAuthen, setIsAuthen] = useState(false);
     useEffect(() => {
-        const checkSessionKey = sessionStorage.getItem("key");
-        if (checkSessionKey) {
-            navigate("/");
-        }
+        checkAuthen();
     }, [])
+
+    const checkAuthen = async () => {
+        let response = await reqCheckJWT();
+        if (response && +response.EC === 0) {
+            setIsAuthen(true);
+            navigate('/');
+        }
+    }
 
     return (
         <div className="container">

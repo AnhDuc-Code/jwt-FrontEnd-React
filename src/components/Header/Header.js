@@ -18,7 +18,8 @@ const Home = (props) => {
     const handleLogout = async () => {
         try {
             await logoutService();
-            navigate("login");
+            // navigate("login");
+            window.location.href = ("/");
         } catch (error) {
             console.log('Error Logout. Lỗi: ', error)
         }
@@ -74,12 +75,12 @@ const Home = (props) => {
                                                 boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
                                             }}>
                                                 <Nav className='menu' style={{ margin: 0, padding: 8, listStyle: "none" }}>
-                                                    <NavLink className={'nav-link bi-person-circle'} to={"/selfInfo"} style={{ padding: 8, cursor: "pointer" }}>  Tài khoản cá nhân</NavLink>
-                                                    <NavLink className={'nav-link bi-gear-fill'} to={"/setting"} style={{ padding: 8, cursor: "pointer" }}>  Cài đặt</NavLink>
+                                                    <NavLink className={'nav-link bi-person-circle'} to={"/personal"} style={{ padding: 8, cursor: "pointer" }} onClick={() => setOpen(!open)}>  Tài khoản cá nhân</NavLink>
+                                                    <NavLink className={'nav-link bi-gear-fill'} to={"/setting"} style={{ padding: 8, cursor: "pointer" }} onClick={() => setOpen(!open)}>  Cài đặt</NavLink>
                                                     <hr />
-                                                    <NavLink className={'nav-link bi-receipt-cutoff'} to={"/orderHistory"} style={{ padding: 8, cursor: "pointer" }}>  Lịch sử đơn hàng</NavLink>
+                                                    <NavLink className={'nav-link bi-receipt-cutoff'} to={"/orderHistory"} style={{ padding: 8, cursor: "pointer" }} onClick={() => setOpen(!open)}>  Lịch sử đơn hàng</NavLink>
                                                     <hr />
-                                                    <li className='nav-link bi-box-arrow-right' onClick={() => handleLogout()} style={{ padding: 8, color: "red", cursor: "pointer" }}>  Đăng xuất</li>
+                                                    <li className='nav-link bi-box-arrow-right' onClick={() => { handleLogout(); setOpen(!open) }} style={{ padding: 8, color: "red", cursor: "pointer" }}>  Đăng xuất</li>
                                                 </Nav>
                                             </div>
                                         )}

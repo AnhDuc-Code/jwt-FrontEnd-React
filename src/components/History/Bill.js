@@ -84,7 +84,8 @@ const Bill = () => {
                 <table className="table table-bordered table-hover" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse', textAlign: "center" }}>
                     <colgroup>
                         <col style={{ width: '140px' }} />
-                        <col style={{ width: '40%' }} />
+                        <col style={{ width: '31%' }} />
+                        <col style={{ width: '9%' }} />
                         <col style={{ width: '9%' }} />
                         <col style={{ width: '9%' }} />
                         <col style={{ width: '9%' }} />
@@ -120,7 +121,8 @@ const Bill = () => {
                                                 <td>{item.Product.category ? item.Product.category : "Sản phẩm đã bị xóa"}</td>
                                                 <td>{item.Product.brand ? item.Product.brand : "Sản phẩm đã bị xóa"}</td>
                                                 <td>{Number(item.numBuy).toLocaleString()}</td>
-                                                <td>{item.price}</td>
+                                                <td>{Number(item.price).toLocaleString()}đ</td>
+                                                <td>{Number(item.totalPrice).toLocaleString()}đ</td>
                                                 <td>
                                                     <button className="bdel btn btn-danger bi-trash" onClick={() => deleteBill({ item })}>  Xóa</button>
                                                 </td>

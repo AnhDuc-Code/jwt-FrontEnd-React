@@ -92,15 +92,21 @@ const Cart = () => {
             };
             try {
                 // 👇 Gửi API đặt hàng từng sản phẩm
-                let response = await buyItem(dataToSend);
-                if (+response.EC === 0) {
-                    toast.success(response.EM);
-                    getCartProducts();
-                } else if (+response.EC === 3) {
-                    toast.warning(response.EM);
+                if (dataToSend.idProduct) {
+                    let response = await buyItem(dataToSend);
+                    if (+response.EC === 0) {
+                        toast.success(response.EM);
+                        getCartProducts();
+                    } else if (+response.EC === 3) {
+                        toast.warning(response.EM);//số lượng sp kho không đủ
+                    }
+                    else {
+                        toast.error(response.EM);
+                    }
                 }
                 else {
-                    toast.error(response.EM);
+                    toast.warning(`🚨 Sản phẩm không tồn tại. (FE) Vui lòng xóa sản phẩm!`);
+
                 }
             } catch (error) {
                 toast.error(`🚨❌ Lỗi hệ thống FE khi xử lý sản phẩm: ${item.Product.title}`);
@@ -149,7 +155,7 @@ const Cart = () => {
                                 </td>
                                 <td>
                                     <img
-                                        src={`http://localhost:9000${item.Product.image}`}
+                                        src={item.Product.image ? (`http://localhost:9000${item.Product.image}`) : "/Default_Image.png"}
                                         alt="ảnh sản phẩm"
                                         style={{
                                             width: '100px',

@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss"
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { loginUser } from "../../ServiceAxios/userService"
+import { loginUser } from "../../ServiceAxios/userService";
+import { reqCheckJWT } from "../../ServiceAxios/userService";
+
 const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -16,15 +18,18 @@ const Login = () => {
     const handleGetSignupPage = () => {
         navigate("/signup")
     }
+    const [isAuthen, setIsAuthen] = useState(false);
     useEffect(() => {
-        // axios.get("http://localhost:9000/api/").then((data) => {
-        //     console.log("lấy được thông tin nhân viên", data);
-        // })
-        // const checkSessionKey = sessionStorage.getItem("key");
-        // if (checkSessionKey) {
-        //     navigate("/");
-        // }
+        checkAuthen();
     }, [])
+
+    const checkAuthen = async () => {
+        let response = await reqCheckJWT();
+        if (response && +response.EC === 0) {
+            setIsAuthen(true);
+            navigate('/');
+        }
+    }
 
     const isValid = () => {
         setIsValidLogin({ ...validDefault });
@@ -59,7 +64,8 @@ const Login = () => {
 
             if (+response.EC === 0) {
                 toast.success(response.EM);
-                navigate("/");
+                // navigate("/");
+                window.location.href = ("/");
                 // const keySession = {
                 //     isAuthenticated: true,
                 //     token: "fake token"

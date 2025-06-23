@@ -1,0 +1,103 @@
+.personal-container {
+    max-width: 420px;
+    margin: 30px auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 24px 32px 20px 32px;
+    box-sizing: border-box;
+
+    .select-personal {
+        display: flex;
+        justify-content: space-evenly;
+        font-size: large;
+        font-weight: bold;
+        height: 50px;
+        align-items: center;
+
+        .info,
+        .password-change {
+            text-decoration: none;
+            color: #000000;
+            border: 1px solid transparent;
+            border-radius: 1cap;
+            transition: color 0.2s, border-color 0.2s; // mượt mà hơn
+            padding: 1px 4px;
+
+            &:hover,
+            &:active {
+                color: #888888;
+                border: 1px solid #353535;
+                border-radius: 1cap;
+                padding: 1px 4px;
+            }
+        }
+
+        .info-actived,
+        .password-change-actived {
+            text-decoration: none;
+            color: #888888;
+            border: 1px solid #353535;
+            border-radius: 1cap;
+            padding: 1px 4px;
+        }
+    }
+}
+
+.personal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+
+    input,
+    select {
+        border: 1px solid #bbb;
+        border-radius: 4px;
+        padding: 7px 10px;
+        font-size: 15px;
+        background: #fafbfc;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border 0.2s;
+
+        &:focus {
+            border: 1.5px solid #1c6fd8;
+            outline: none;
+            background: #fff;
+        }
+
+        &:disabled {
+            background: #f3f3f3;
+            color: #888;
+        }
+    }
+}
+
+.btn-save {
+    padding: 8px 22px;
+    font-size: 15px;
+    background: #1c6fd8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #174a8b;
+    }
+}
