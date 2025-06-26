@@ -39,8 +39,20 @@ const logoutService = () => {
 const getPersonalInfo = () => {
     return axios.get("api/user/info");
 }
+const updateInfo = (data) => {
+    return axios.put("api/user/update/info", { data });
+}
+const updatePassword = (data) => {
+    return axios.put("api/user/update/password", { data });
+}
+
+const toSellerService = async () => {
+    return await axios.put("api/user/seller");
+}
 
 export {
     reqCheckJWT,
-    createUser, loginUser, readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles, logoutService, getPersonalInfo
+    createUser, loginUser, logoutService, toSellerService,
+    readUsers, readUsersWithPage, createFullUser, editUserWithId, deleteUserWithId, readRoles,
+    getPersonalInfo, updateInfo, updatePassword
 }

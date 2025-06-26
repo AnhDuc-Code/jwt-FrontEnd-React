@@ -9,14 +9,16 @@ const ModelProductActions = (props) => {
 
 
     useEffect(() => {
-        // console.log("check dataUpdateUser", props.dataUpdateUser);
+        console.log("check dataUpdate Product", props.dataUpdate);
         startModal();
     }, [props.show]
     )
     const startModal = async () => {
         try {
-            await props.onchangeDataProduct({ "category": "Sữa" });
-            await props.onchangeDataProduct({ "brand": "Hãng" });
+            if (props.action === "CREATE") {
+                console.log("hêre")
+                await props.onchangeDataProduct({ brand: "Hãng", category: "Sữa" });
+            }
         } catch (error) {
             console.log("Lỗi Khởi động ModalSeller", error);
         }
@@ -24,7 +26,7 @@ const ModelProductActions = (props) => {
 
     return (
         <>
-            <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.show} >
+            <Modal className='modalUser' size="lg" centered onHide={props.handleClose} show={props.show} >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modalUser-title">
                         {props.action === "CREATE" ? "Thêm sản phẩm" : "Sửa sản phẩm"}
@@ -45,16 +47,18 @@ const ModelProductActions = (props) => {
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Tên Sản Phẩm(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} placeholder='vd: Sữa ColosBaby Gold' type='text' onChange={(event) => { props.onchangeDataProduct({ "title": event.target.value }) }} />
+                            <input className="form-control" value={props.action === "UPDATE" ? props.dataUpdate.title : undefined} placeholder="vd: Sữa ColosBaby Gold" type="text"
+                                onChange={(event) => props.onchangeDataProduct({ title: event.target.value })} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Giá tiền(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} placeholder='' type='number' inputMode="numeric" onChange={(event) => { props.onchangeDataProduct({ "price": event.target.value }) }} />
+                            <input className={'form-control'} placeholder='' type='number' inputMode="numeric" value={props.action === "UPDATE" ? props.dataUpdate.price : undefined} onChange={(event) => { props.onchangeDataProduct({ "price": event.target.value }) }} />
                         </div>
 
                         <div className='form-group col-6'>
                             <label className={''}>Phân loại</label>
                             <select className='form-select' id='idForm' onChange={(event) => { props.onchangeDataProduct({ "category": event.target.value }) }}>
+                                {props.action === "UPDATE" && <option key={0} value={props.dataUpdate.category} defaultValue>{props.dataUpdate.category} - Hiện tại</option>}
                                 <option key={1} value="Sữa" defaultValue>-Loại Sữa-</option>
                                 <option key={2} value="Sữa bột">Sữa bột</option>
                                 <option key={3} value="Sữa tươi">Sữa pha sẵn</option>
@@ -64,15 +68,15 @@ const ModelProductActions = (props) => {
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Hãng</label>
-                            <input className={'form-control'} placeholder='Mặc định: Hãng' type='text' onChange={(event) => { props.onchangeDataProduct({ "brand": event.target.value }) }} />
+                            <input className={'form-control'} placeholder='Mặc định: Hãng' type='text' value={props.action === "UPDATE" ? props.dataUpdate.brand : undefined} onChange={(event) => { props.onchangeDataProduct({ "brand": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Số lượng(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} placeholder='số lượng sản phẩm' type='number' onChange={(event) => { props.onchangeDataProduct({ "quantity": event.target.value }) }} />
+                            <input className={'form-control'} placeholder='số lượng sản phẩm' type='number' value={props.action === "UPDATE" ? props.dataUpdate.quantity : undefined} onChange={(event) => { props.onchangeDataProduct({ "quantity": event.target.value }) }} />
                         </div>
                         <div className='form-group col-12'>
                             <label className={''}>Mô tả</label>
-                            <textarea className={'form-control'} placeholder='Mô tả sản phẩm' type='text' onChange={(event) => { props.onchangeDataProduct({ "description": event.target.value }) }} />
+                            <textarea className={'form-control'} placeholder='Mô tả sản phẩm' type='text' value={props.action === "UPDATE" ? props.dataUpdate.description : undefined} onChange={(event) => { props.onchangeDataProduct({ "description": event.target.value }) }} />
                         </div>
                         {/* <div className='form-group col-6'>
                             {

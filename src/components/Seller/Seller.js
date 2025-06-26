@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { getProductsService, createProduct, deleteProductWithId } from "../../ServiceAxios/productService";
+import { getProductsService, createProduct, editProduct, deleteProductWithId } from "../../ServiceAxios/productService";
+import { toSellerService, logoutService } from "../../ServiceAxios/userService";
 import ModalProductActions from "./ModalProductActions";
 import ModalDelete from "./ModalDelete";
+import ModalToSeller from "./ModalToSeller";
 import { toast } from 'react-toastify';
 import "./Seller.scss"
 
@@ -17,6 +19,8 @@ const Seller = () => {
     const [dataCreate, setDataCreate] = useState(defaultData);
     const [dataUpdate, setDataUpdate] = useState(defaultData);
     const [dataDelete, setDataDelete] = useState(defaultData);
+    const [showModalSeller, setShowModalSeller] = useState(false);
+    const [buttonToSeller, setButtonToSeller] = useState(true);
     useEffect(() => {
         getProducts();
     }, []);
@@ -27,6 +31,7 @@ const Seller = () => {
             if (responce && responce.EC === 0) {
                 console.log("check res productUser", responce);
                 setListProducts(responce.DT);
+                setButtonToSeller(false);
             }
         } catch (error) {
 
@@ -36,16 +41,20 @@ const Seller = () => {
     const onchangeDataProduct = async (input) => {
         if (action === "CREATE") {
             await setDataCreate({ ...dataCreate, ...input })
+            console.log("check change Input: ", input);
         } else {
             await setDataUpdate({ ...dataUpdate, ...input })
         }
     }
 
     const setImage = (event) => {
-        console.log("check event", event);
         const file = event.target.files[0];
         setImagePreview(URL.createObjectURL(file));
-        setDataCreate((pre) => ({ ...pre, image: file }))
+        if (action === "CREATE") {
+            setDataCreate((pre) => ({ ...pre, image: file }))
+        } else {
+            setDataUpdate((pre) => ({ ...pre, image: file }))
+        }
     }
 
     const handleCreateProduct = async () => {
@@ -59,6 +68,29 @@ const Seller = () => {
         formCreate.append("brand", dataCreate.brand);
         formCreate.append("quantity", dataCreate.quantity);
         let response = await createProduct(formCreate);
+        if (response && response.EC === 0) {
+            console.log(response);
+            toast.success(response.EM);
+            handleClose();
+            getProducts();
+        }
+        else {
+            toast.error(response.EM);
+        }
+    }
+
+    const handleEditProduct = async () => {
+        console.log("gửi Create", dataUpdate.image);
+        const formUpdate = new FormData();
+        formUpdate.append("idProduct", dataUpdate.idProduct); // ✅ File object
+        formUpdate.append("image", dataUpdate.image); // ✅ File object
+        formUpdate.append("title", dataUpdate.title);
+        formUpdate.append("description", dataUpdate.description);
+        formUpdate.append("price", dataUpdate.price);
+        formUpdate.append("category", dataUpdate.category);
+        formUpdate.append("brand", dataUpdate.brand);
+        formUpdate.append("quantity", dataUpdate.quantity);
+        let response = await editProduct(formUpdate);
         if (response && response.EC === 0) {
             console.log(response);
             toast.success(response.EM);
@@ -88,6 +120,21 @@ const Seller = () => {
         setShowModalDelete(false);
     }
 
+    const toSeller = async () => {
+        setShowModalSeller(true);
+    }
+    const confirmToSeller = async () => {
+        let response = await toSellerService();
+        if (response && +response.EC === 0) {
+            toast.success(response.EM);
+            await logoutService();
+            window.location.href = ("/login");
+            toast.success("Vui lòng đăng nhập lại tài khoản!");
+        } else {
+            toast.error(response.EM);
+        }
+        setShowModalSeller(false);
+    }
     const handleClose = () => {
         setShowModalActions(false);
         setShowModalDelete(false);
@@ -95,6 +142,8 @@ const Seller = () => {
         setDataCreate(defaultData);
         setDataUpdate(defaultData);
         setImagePreview(null);
+        setAction("");
+        setShowModalSeller(false);
     }
     return (
         <>
@@ -102,6 +151,8 @@ const Seller = () => {
                 <div>
                     <button className="badd btn btn-primary my-3 bi-plus-circle" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>  Thêm sản phẩm bán
                     </button>
+                    {buttonToSeller &&
+                        <button className="bToSeller btn btn-success my-3" onClick={() => { toSeller() }}>Đăng ký làm người bán</button>}
                 </div>
                 <table className="table table-bordered table-hover" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse', textAlign: "center" }}>
                     <colgroup>
@@ -151,6 +202,7 @@ const Seller = () => {
                                                         setShowModalActions(true);
                                                         setAction("UPDATE");
                                                         setDataUpdate(item);
+                                                        setImagePreview(`http://localhost:9000${item.image}`);
                                                     }}>  Sửa</button>
                                                     <button className="bdel btn btn-danger bi-trash" onClick={() => deleteProduct({ item })}>  Xóa</button>
                                                 </td>
@@ -187,10 +239,11 @@ const Seller = () => {
                 </span>
             </div >
             <ModalDelete show={showModalDelete} handleClose={handleClose} confirmDeleteProduct={confirmDeleteProduct} />
+            <ModalToSeller show={showModalSeller} handleClose={handleClose} confirmToSeller={confirmToSeller} />
             <ModalProductActions
                 action={action} show={showModalActions} handleClose={handleClose}
-                handleCreateProduct={handleCreateProduct} onchangeDataProduct={onchangeDataProduct} setImage={setImage} imagePreview={imagePreview} dataCreate={dataCreate}
-            //     handleEditUser={handleEditUser} dataUpdateUser={dataUpdateUser} showModalCreate={showModalCreate}
+                handleCreateProduct={handleCreateProduct} onchangeDataProduct={onchangeDataProduct} setImage={setImage} imagePreview={imagePreview} dataUpdate={dataUpdate}
+                handleEditProduct={handleEditProduct}
             />
         </>
     )

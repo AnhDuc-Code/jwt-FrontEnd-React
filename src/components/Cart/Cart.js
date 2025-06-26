@@ -28,6 +28,20 @@ const Cart = () => {
         }
     }, [cartItems]);
 
+    // Tính những sản phẩm đã được chọn (checkbox)
+    useEffect(() => {
+        let totalCount = 0;
+        let totalMoney = 0;
+        cartItems.forEach(item => {
+            if (checkedItems[item.idCart]) {
+                totalCount += Number(item.numBuy);
+                totalMoney += Number(item.Product.price) * Number(item.numBuy);
+            }
+        });
+        setNumberProducts(totalCount);
+        setTotalPrice(totalMoney);
+    }, [cartItems, checkedItems]);
+
     const getCartProducts = async () => {
         try {
             let response = await getCartService();
@@ -125,8 +139,8 @@ const Cart = () => {
                         <col style={{ width: '3%' }} />
                         <col style={{ width: '10%' }} />
                         <col style={{ width: '25%' }} />
-                        <col style={{ width: '17%' }} />
-                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '14%' }} />
+                        <col style={{ width: '13%' }} />
                         <col style={{ width: '10%' }} />
                         <col style={{ width: '15%' }} />
                         <col style={{ width: '10%' }} />
@@ -191,9 +205,7 @@ const Cart = () => {
 
                     <tfoot>
                         <tr className="cart-footer">
-                            <td><input type="checkbox" /></td>
-                            <td>Chọn Tất Cả</td>
-                            <td colSpan={2}></td>
+                            <td colSpan={4}></td>
                             <td colSpan={2}>
                                 <span>
                                     Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong>

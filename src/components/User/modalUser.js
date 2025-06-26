@@ -8,26 +8,39 @@ const ModalUser = (props) => {
     useEffect(() => {
         getRoles();
         console.log("check dataUpdateUser", props.dataUpdateUser);
+    }, []
+    )
+
+    useEffect(() => {
+        startModal();
+        console.log("check dataUpdateUser", props.dataUpdateUser);
     }, [props.showModalCreate]
     )
+
     const getRoles = async () => {
         try {
             let res = await readRoles();
             if (res.EC === 0) {
                 let data = res.DT;
                 await setDataRoles(data);
-                await props.handleOnchangeDataUser({
-                    role: res.DT[0].idRole,
-                    gender: "-none-"
-                });
-
-
             }
         } catch (error) {
             console.log(error);
         }
     }
 
+    const startModal = async () => {
+        if (props.action === "CREATE") {
+            await props.handleOnchangeDataUser({
+                role: dataRoles[0].idRole,
+                gender: "-none-"
+            });
+        } else {
+            await props.handleOnchangeDataUser({
+                role: props?.dataUpdateUser?.Role?.idRole
+            });
+        }
+    }
     return (
         <>
             <Modal className='modalUser' size="md" centered onHide={props.handleClose} show={props.showModalCreate} >
@@ -40,27 +53,28 @@ const ModalUser = (props) => {
                     <div className='modal-body row'>
                         <div className='form-group col-6'>
                             <label className={''}>Tên(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "username": event.target.value }) }} />
+                            <input className={'form-control'} type='text' value={props.action === "UPDATE" ? props.dataUpdateUser.username : undefined} onChange={(event) => { props.handleOnchangeDataUser({ "username": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Email(<span className='red'>*</span>)</label>
-                            <input className={'form-control'} type='email' onChange={(event) => { props.handleOnchangeDataUser({ "email": event.target.value }) }} />
+                            <input className={'form-control'} type='email' value={props.action === "UPDATE" ? props.dataUpdateUser.email : undefined} onChange={(event) => { props.handleOnchangeDataUser({ "email": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Số điện thoại</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "phone": event.target.value }) }} />
+                            <input className={'form-control'} type='text' value={props.action === "UPDATE" ? props.dataUpdateUser.phone : undefined} onChange={(event) => { props.handleOnchangeDataUser({ "phone": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             <label className={''}>Giới tính</label>
                             <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "gender": event.target.value }) }}>
-                                <option value={'None'} defaultValue>-tạm không-</option>
-                                <option value={'Female'} >Nữ</option>
-                                <option value={'Male'}>Nam</option>
+                                {props.action === "UPDATE" ? <option value={props.dataUpdateUser.gender ? props.dataUpdateUser.gender : "nobug"} defaultValue>{props.dataUpdateUser.gender}</option> :
+                                    <option value={'None'} defaultValue>-tạm không-</option>}
+                                <option value={'Nữ'} >Nữ</option>
+                                <option value={'Nam'}>Nam</option>
                             </select>
                         </div>
                         <div className='form-group col-12'>
                             <label className={''}>Địa chỉ</label>
-                            <input className={'form-control'} type='text' onChange={(event) => { props.handleOnchangeDataUser({ "address": event.target.value }) }} />
+                            <input className={'form-control'} type='text' value={props.action === "UPDATE" ? props.dataUpdateUser.address : undefined} onChange={(event) => { props.handleOnchangeDataUser({ "address": event.target.value }) }} />
                         </div>
                         <div className='form-group col-6'>
                             {
@@ -83,10 +97,11 @@ const ModalUser = (props) => {
                         <div className='form-group col-12'>
                             <label className={''}>Chức vụ(<span className='red'>*</span>)</label>
                             <select className='form-select' id='idForm' onChange={(event) => { props.handleOnchangeDataUser({ "role": event.target.value }) }}>
+                                {props.action === "UPDATE" && <option key={0} value={props?.dataUpdateUser?.Role?.idRole}>{props?.dataUpdateUser?.Role?.roleName} - Hiện tại</option>}
                                 {dataRoles.length > 0 &&
                                     dataRoles.map((value, index) => {
                                         return (
-                                            <option key={index} value={value.idRole}>
+                                            <option key={index + 1} value={value.idRole}>
                                                 {value.roleName}
                                             </option>
                                         )
@@ -100,7 +115,7 @@ const ModalUser = (props) => {
                 <Modal.Footer>
                     <Button className='btn btn-secondary' onClick={props.handleClose}>Đóng</Button>
                     <Button className='btn btn-success' onClick={props.action === "CREATE" ? props.handleCreateFullUser : props.handleEditUser}>
-                        {props.action === "CREATE" ? "Create" : "Update"}
+                        {props.action === "CREATE" ? "Tạo thông tin" : "Sửa thông tin"}
                     </Button>
                 </Modal.Footer>
             </Modal>

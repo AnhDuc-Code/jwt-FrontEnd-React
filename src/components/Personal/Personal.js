@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Personal.scss";
-import { getPersonalInfo } from "../../ServiceAxios/userService";
-import { NavLink } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { getPersonalInfo, updateInfo, updatePassword } from "../../ServiceAxios/userService";
+import { toast } from "react-toastify";
 const Personal = () => {
     const [action, setAction] = useState("INFO");
     const [selfInfo, setSelfInfo] = useState({
+        idUser: "",
         email: "",
         username: "",
         gender: "",
@@ -14,6 +14,7 @@ const Personal = () => {
         role: ""
     });
     const [changePass, setChangePass] = useState({
+        idUser: "",
         oldPass: "",
         newPass1: "",
         newPass2: ""
@@ -29,6 +30,7 @@ const Personal = () => {
                 if (+response.EC === 0) {
                     console.log("check thông tin cá nhân: ", response.DT.DT);
                     setSelfInfo({
+                        idUser: response.DT.idUser,
                         email: response.DT.email,
                         username: response.DT.username,
                         gender: response.DT.gender,
@@ -36,6 +38,11 @@ const Personal = () => {
                         phone: response.DT.phone,
                         role: response.DT.Role.roleName,
                     })
+                    setChangePass((pre) => ({
+                        ...pre,
+                        idUser: response.DT.idUser
+                    }
+                    ));
                 }
             }
         } catch (error) {
@@ -57,11 +64,25 @@ const Personal = () => {
         }));
     };
 
-    const handleUpdateInfo = (event) => {
+    const handleUpdateInfo = async (event) => {
         event.preventDefault();
+        let response = await updateInfo(selfInfo);
+        if (response?.EC === 0) {
+            toast.success(response.EM);
+            getPersonal();
+        } else {
+            toast.error(response.EM);
+        }
     };
-    const handleUpdatePassword = (event) => {
+    const handleUpdatePassword = async (event) => {
         event.preventDefault();
+        let response = await updatePassword(changePass);
+        if (response?.EC === 0) {
+            toast.success(response.EM);
+            getPersonal();
+        } else {
+            toast.error(response.EM);
+        }
     };
 
     return (
@@ -99,7 +120,7 @@ const Personal = () => {
                 </div>
                 <div className="form-row">
                     <label>Chức vụ</label>
-                    <input type="text" name="phone" value={selfInfo.role} readOnly disabled />
+                    <input type="text" name="role" value={selfInfo.role} readOnly disabled />
                 </div>
                 <div className="form-row" style={{ justifyContent: "flex-end" }}>
                     <button type="submit" className="btn-save">Lưu</button>
@@ -107,11 +128,11 @@ const Personal = () => {
             </form>
                 :
                 <form className="personal-form" onSubmit={handleUpdatePassword}>
-                    <div className="form-row">
+                    <div className="oldPass form-row">
                         <label htmlFor="oldPass">Mật khẩu cũ</label>
                         <input type="text" name="oldPass" id="oldPass" value={changePass.oldPass} onChange={handleChangePass} />
                     </div>
-                    <div className="form-row">
+                    <div className="newPass1 form-row">
                         <label>Mật khẩu mới</label>
                         <input type="text" name="newPass1" value={changePass.newPass1} onChange={handleChangePass} />
                     </div>

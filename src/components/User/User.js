@@ -16,7 +16,7 @@ const User = () => {
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [dataItem, setDataItem] = useState({});
     const defaultData = {
-        username: "", email: "", phone: "", gender: "", password: "", role: ""
+        username: "", email: "", phone: "", gender: "", password: "", confirmPassword: "", role: ""
     }
     const [dataCreateUser, setDataCreateUser] = useState(defaultData);
     const [dataUpdateUser, setDataUpdateUser] = useState(defaultData);
@@ -72,6 +72,10 @@ const User = () => {
     // }
 
     const handleCreateFullUser = async () => {
+        let checkConfirm = confirmRequest(dataCreateUser);
+        if (checkConfirm) {
+            return;
+        }
         console.log("thông tin sẽ gửi...", dataCreateUser);
         let response = await createFullUser(dataCreateUser);
         if (response && response.EC === 0) {
@@ -88,6 +92,10 @@ const User = () => {
     //Update
     const handleEditUser = async () => {
         try {
+            let checkConfirm = confirmRequest(dataUpdateUser);
+            if (checkConfirm) {
+                return;
+            }
             let response = await editUserWithId(dataUpdateUser);
             console.log("check responce", response);
             if (response && response.EC === 0) {
@@ -119,7 +127,31 @@ const User = () => {
     }
 
 
-    const emptyFunc = () => {
+    const confirmRequest = (data) => {
+        if (!data?.username) {
+            toast.warning("Bạn cần nhập Tên tài khoản");
+            return true;
+        }
+        if (!data?.email) {
+            toast.warning("Bạn cần nhập Email");
+            return true;
+        }
+        if (action === "CREATE" && !data?.password) {
+            toast.warning("Bạn cần nhập Mật khẩu");
+            return true;
+        }
+        if (action === "CREATE" && data?.password.length < 8) {
+            toast.warning("Mật khẩu cần ít nhất 8 ký tự");
+            return true;
+        }
+        if (action === "CREATE" && data?.confirmPassword !== data?.password) {
+            toast.warning("Mật khẩu không giống nhau");
+            return true;
+        }
+        if (!data?.role) {
+            toast.warning("Bạn cần chọn chức vụ");
+            return true;
+        }
     }
 
     return (
@@ -191,10 +223,8 @@ const User = () => {
                         <Form.Select onChange={(event) => changePage(Number(event.target.value))}>
                             {
                                 totalPage && Array.from({ length: totalPage }, (index, value) => value + 1).map((value, index) => (
-
                                     <option key={index} value={value} >{value}</option>
                                 ))
-
                             }
                         </Form.Select>
                     </span>

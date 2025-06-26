@@ -2,6 +2,22 @@
     max-width: 100%;
 }
 
+.searchBar {
+    padding-left: 120px;
+
+    .input-group-text {
+        width: 190px;
+    }
+
+    .searchAll {
+        max-width: 905px;
+    }
+
+    .searchPage {
+        max-width: 995px;
+    }
+}
+
 .Homepage_content {
     .Homepage_content_right {
         width: 1270px;
