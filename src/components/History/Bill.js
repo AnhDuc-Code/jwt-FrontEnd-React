@@ -100,6 +100,7 @@ const Bill = () => {
                             <th>Hãng</th>
                             <th>Số lượng</th>
                             <th>Giá</th>
+                            <th>Tổng tiền</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -134,7 +135,7 @@ const Bill = () => {
                                 :
                                 <>
                                     <tr>
-                                        <td colSpan={7}>
+                                        <td colSpan={8}>
                                             Không có bản ghi nào
                                         </td>
                                     </tr>

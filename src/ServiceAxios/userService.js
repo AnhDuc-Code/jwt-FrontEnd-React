@@ -46,8 +46,8 @@ const updatePassword = (data) => {
     return axios.put("api/user/update/password", { data });
 }
 
-const toSellerService = async () => {
-    return await axios.put("api/user/seller");
+const toSellerService = async (data) => {
+    return await axios.put("api/user/seller", { data });
 }
 
 export {

@@ -11,21 +11,42 @@ const HomePage = () => {
     const [keywordPage, setKeywordPage] = useState("");
     const [keywordAll, setKeywordAll] = useState("");
     const [dataMilks, setDataMilks] = useState([]);
-    // const [theFilterMilk, setTheFilterMilk] = useState();
+    const [typeMilk, setTypeMilk] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(10);
+    const [action, setAction] = useState("HOME");
+    useEffect(() => {
+        setPage(1);
+    }, [action])
 
     useEffect(() => {
         getPageHome();
-    }, []
-    )
+    }, [page & action === "HOME"])
+
+    useEffect(() => {
+        getFilterMilk();
+    }, [page & action === "FILTER", typeMilk])
+
     const getPageHome = async () => {
-        let responseData = await getProducts();
-        setDataMilks(responseData.DT.data);
+        if (action === "HOME") {
+            setAction("HOME");
+            let responseData = await getProducts(page);
+            setDataMilks(responseData.DT.data);
+            setTotalPage(responseData.DT.totalPages);
+        }
     };
 
-    const filterMilk = async (typeMilk) => {
-        console.log("check typeMilk before send Request: ", typeMilk);
-        let responseData = await getProductsFiltered(1, typeMilk);
-        setDataMilks(responseData.DT.data);
+    const setFilterMilk = async (filterMilk) => {
+        setAction("FILTER");
+        setTypeMilk(filterMilk);
+    }
+
+    const getFilterMilk = async () => {
+        if (action === "FILTER") {
+            let responseData = await getProductsFiltered(page, typeMilk);
+            setDataMilks(responseData.DT.data);
+            setTotalPage(responseData.DT.totalPages);
+        }
     }
 
     const handleSearchPage = (e) => {
@@ -41,13 +62,14 @@ const HomePage = () => {
     }
     const searchProducts = async (e) => {
         e.preventDefault();
-        let response = await searchProductsService(1, keywordAll);
+        let response = await searchProductsService(page, keywordAll);
         setDataMilks(response.DT.data);
+        setTotalPage(response.DT.totalPages);
     }
     return (
         <>
             <div className="searchBar">
-                <Form onSubmit={searchProducts}>
+                <Form onSubmit={(e) => { setAction("SEARCH"); searchProducts(e) }}>
                     <InputGroup className="mb-3 mt-3 container">
                         <InputGroup.Text>Tìm kiếm tất cả</InputGroup.Text>
                         <Form.Control className="searchAll"
@@ -67,9 +89,10 @@ const HomePage = () => {
                         onChange={handleSearchPage}
                     />
                 </InputGroup>
-            </div>
+                <p className="alert-search container">{filteredProducts.length === 0 && keywordPage.length > 0 && "🚨Không có sản phẩm tìm nhanh"}</p>
+            </div >
             <div className="Homepage_content d-flex">
-                <Sidebarr filterMilk={filterMilk} />
+                <Sidebarr setFilterMilk={setFilterMilk} />
                 <div className="Homepage_content_right">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((item) => {
@@ -89,6 +112,18 @@ const HomePage = () => {
                         })
                     )
                     }
+                    <span className="d-flex" style={{ justifyContent: 'center', alignItems: 'center', flex: '0 0 100%' }}>
+                        Trang hiện tại:
+                        <span>
+                            <Form.Select onChange={(event) => setPage(Number(event.target.value))}>
+                                {
+                                    totalPage && Array.from({ length: totalPage }, (index, value) => value + 1).map((value, index) => (
+                                        <option key={index} value={value} >{value}</option>
+                                    ))
+                                }
+                            </Form.Select>
+                        </span>
+                    </span>
                 </div>
             </div>
         </>

@@ -150,7 +150,7 @@ const Cart = () => {
                             <td></td>
                             <td>Ảnh Sản Phẩm</td>
                             <td>Tên Sản Phẩm</td>
-                            <td></td>
+                            <td>Cửa hàng</td>
                             <td>Đơn Giá</td>
                             <td>Số Lượng</td>
                             <td>Số Tiền</td>
@@ -186,7 +186,7 @@ const Cart = () => {
                                         Phân Loại: {item.Product.category}
                                     </p>
                                 </td>
-                                <td></td>
+                                <td className="store">{item?.Product?.Store?.storeName}</td>
                                 <td className="item-price">{Number(item.Product.price).toLocaleString()}₫</td>
                                 <td className="item-quantity">
                                     <input type="text" value={item.numBuy} readOnly />

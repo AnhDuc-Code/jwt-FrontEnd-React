@@ -10,6 +10,22 @@
     }
 }
 
+.store-info {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+
+    .store-name {
+        color: rgb(255, 166, 0);
+    }
+
+    .store-address {
+        font-size: large;
+
+    }
+}
+
 .bToSeller {
     margin-left: 1rem;
 }

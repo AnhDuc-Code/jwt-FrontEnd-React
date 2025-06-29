@@ -12,13 +12,6 @@ const Product = (props) => {
             state:
             {
                 idProduct: props.idProduct,
-                image: props.image,
-                title: props.title,
-                price: props.price,
-                description: props.description,
-                brand: props.brand,
-                category: props.category,
-                quantity: props.quantity
             }
         });
     }

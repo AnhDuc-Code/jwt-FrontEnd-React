@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import "./Seller.scss"
 
 const Seller = () => {
+    const [store, setStore] = useState("");
+    const [storeAddress, setStoredAddress] = useState("");
     const [listProducts, setListProducts] = useState([]);
     const [showModalActions, setShowModalActions] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -21,6 +23,19 @@ const Seller = () => {
     const [dataDelete, setDataDelete] = useState(defaultData);
     const [showModalSeller, setShowModalSeller] = useState(false);
     const [buttonToSeller, setButtonToSeller] = useState(true);
+
+    const defaultDataSeller = {
+        storeName: "", taxCode: "", addressStore: ""
+    };
+    const [dataToSeller, setDataToSeller] = useState(defaultDataSeller);
+    const onchangeDataToSeller = (e) => {
+        setDataToSeller((pre) => ({
+            ...pre,
+            [e.target.name]: e.target.value
+        })
+        )
+    }
+
     useEffect(() => {
         getProducts();
     }, []);
@@ -32,6 +47,9 @@ const Seller = () => {
                 console.log("check res productUser", responce);
                 setListProducts(responce.DT);
                 setButtonToSeller(false);
+                setStore(responce?.DT[0]?.Store?.storeName);
+                setStoredAddress(responce?.DT[0]?.Store?.addressStore);
+                console.log(responce.DT);
             }
         } catch (error) {
 
@@ -57,7 +75,30 @@ const Seller = () => {
         }
     }
 
+    const confirmRequest = (data) => {
+        if (!data?.image) {
+            toast.warning("Bạn cần Hình ảnh sản phẩm");
+            return true;
+        }
+        if (!data?.title) {
+            toast.warning("Bạn cần nhập Tên sản phẩm");
+            return true;
+        }
+        if (!data?.price || data.price <= 5000) {
+            toast.warning("Bạn cần nhập Giá tiền ít nhất 5000đ");
+            return true;
+        }
+        if (!data?.quantity || data.quantity <= 5) {
+            toast.warning("Bạn cần nhập Số lượng ít nhất 5");
+            return true;
+        }
+    }
+
     const handleCreateProduct = async () => {
+        let checkConfirm = confirmRequest(dataCreate);
+        if (checkConfirm) {
+            return;
+        }
         console.log("gửi Create", dataCreate.image);
         const formCreate = new FormData();
         formCreate.append("image", dataCreate.image); // ✅ File object
@@ -80,7 +121,11 @@ const Seller = () => {
     }
 
     const handleEditProduct = async () => {
-        console.log("gửi Create", dataUpdate.image);
+        let checkConfirm = confirmRequest(dataUpdate);
+        if (checkConfirm) {
+            return;
+        }
+        console.log("gửi Update", dataUpdate.image);
         const formUpdate = new FormData();
         formUpdate.append("idProduct", dataUpdate.idProduct); // ✅ File object
         formUpdate.append("image", dataUpdate.image); // ✅ File object
@@ -124,7 +169,7 @@ const Seller = () => {
         setShowModalSeller(true);
     }
     const confirmToSeller = async () => {
-        let response = await toSellerService();
+        let response = await toSellerService(dataToSeller);
         if (response && +response.EC === 0) {
             toast.success(response.EM);
             await logoutService();
@@ -148,12 +193,13 @@ const Seller = () => {
     return (
         <>
             <div className="Seller-container container">
-                <div>
-                    <button className="badd btn btn-primary my-3 bi-plus-circle" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>  Thêm sản phẩm bán
-                    </button>
-                    {buttonToSeller &&
-                        <button className="bToSeller btn btn-success my-3" onClick={() => { toSeller() }}>Đăng ký làm người bán</button>}
+                <div className="store-info">
+                    <h2 className="store-name">{store}</h2> <p className="store-address">Địa chỉ: {storeAddress}</p>
                 </div>
+                <button className="badd btn btn-primary mb-3 bi-plus-circle" onClick={() => { setShowModalActions(true); setAction("CREATE") }}>  Thêm sản phẩm bán
+                </button>
+                {buttonToSeller &&
+                    <button className="bToSeller btn btn-success mb-3" onClick={() => { toSeller() }}>Đăng ký làm người bán</button>}
                 <table className="table table-bordered table-hover" style={{ width: '100%', tableLayout: 'fixed', borderCollapse: 'collapse', textAlign: "center" }}>
                     <colgroup>
                         <col style={{ width: '140px' }} />
@@ -239,7 +285,7 @@ const Seller = () => {
                 </span>
             </div >
             <ModalDelete show={showModalDelete} handleClose={handleClose} confirmDeleteProduct={confirmDeleteProduct} />
-            <ModalToSeller show={showModalSeller} handleClose={handleClose} confirmToSeller={confirmToSeller} />
+            <ModalToSeller show={showModalSeller} handleClose={handleClose} confirmToSeller={confirmToSeller} onchangeDataToSeller={onchangeDataToSeller} />
             <ModalProductActions
                 action={action} show={showModalActions} handleClose={handleClose}
                 handleCreateProduct={handleCreateProduct} onchangeDataProduct={onchangeDataProduct} setImage={setImage} imagePreview={imagePreview} dataUpdate={dataUpdate}

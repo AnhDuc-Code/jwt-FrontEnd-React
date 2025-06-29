@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./ProductDetail.scss";
 import { useLocation } from "react-router-dom";
 import { addToCart } from "../../ServiceAxios/cartService";
+import { getProductDetailService } from "../../ServiceAxios/productService";
 import { toast } from 'react-toastify';
 
 const ProductDetail = (props) => {
@@ -9,9 +10,28 @@ const ProductDetail = (props) => {
     // console.log(location);
 
     useEffect(() => {
-        console.log("check Props: ");
+        getProductDetail();
+        console.log("check data res: ");
     }, []
     )
+    const [productDetail, setProductDetail] = useState({
+        idProduct: "", image: "", title: "", price: "", description: "", brand: "", category: "", quantity: "", Store: ""
+    })
+    const [store, setStore] = useState({
+        storeName: "", addressStore: ""
+    })
+    const getProductDetail = async () => {
+        try {
+
+            let response = await getProductDetailService(location.state.idProduct);
+            if (response && response.EC === 0) {
+                console.log("chekc detail: ", response.DT)
+                setProductDetail(response.DT);
+            }
+        } catch (error) {
+
+        }
+    }
 
     const [numBuy, setNumBuy] = useState(1);
 
@@ -28,7 +48,7 @@ const ProductDetail = (props) => {
 
     const addTCart = async () => {
         try {
-            let response = await addToCart({ idProduct: location.state.idProduct, numBuy: numBuy });
+            let response = await addToCart({ idProduct: productDetail.idProduct, numBuy: numBuy });
             if (response && response.EC === 0) {
                 console.log(response);
                 toast.success(response.EM);
@@ -45,7 +65,7 @@ const ProductDetail = (props) => {
         <>
             <div className="product-detail  container">
                 <div className="product-detail_left">
-                    <img src={`http://localhost:9000${location.state.image}`} style={{
+                    <img src={`http://localhost:9000${productDetail.image}`} style={{
                         width: '400px',
                         height: '400px',
                         objectFit: 'cover',
@@ -55,19 +75,22 @@ const ProductDetail = (props) => {
                 </div>
 
                 <div className="product-detail_right">
-                    <h2 className="title">{location.state.title}</h2>
-                    <p className="brand">{location.state.quantity} Sản phẩm có sẵn.</p>
+                    <h2 className="title">{productDetail.title}</h2>
+                    <p className="brand">{productDetail.quantity} Sản phẩm có sẵn.</p>
 
+                    <div className="store">
+                        <span className="storeDetail">Cửa hàng: {productDetail.Store.storeName}</span>
+                    </div>
                     <div className="rating">
-                        <span className="stars">⭐ location.state.rate</span>
-                        <span className="reviews">location.state.numberRate Đánh giá & location.state.numberReview Bình luận</span>
+                        {/* <span className="stars">⭐ productDetail.rate</span> */}
+                        {/* <span className="reviews">productDetail.numberRate Đánh giá & productDetail.numberReview Bình luận</span> */}
                     </div>
 
                     <div className="price">
-                        <strong>Giá: {Number(location.state.price).toLocaleString()}đ</strong>
+                        <strong>Giá: {Number(productDetail.price).toLocaleString()}đ</strong>
                     </div>
                     <div className="brand">
-                        <strong>Hãng {location.state.brand}</strong>
+                        <strong>Hãng {productDetail.brand}</strong>
                     </div>
                     <div className="numbuy">
                         <b className="text-selector">Số lượng: </b>
@@ -80,12 +103,12 @@ const ProductDetail = (props) => {
                         <b className="text-selector">Phân loại</b>
                         <div className="pack-option selected">
                             <div>
-                                <strong>{Number(location.state.price).toLocaleString()}đ</strong>
+                                <strong>{Number(productDetail.price).toLocaleString()}đ</strong>
                             </div>
                         </div>
                     </div>
                     <hr />
-                    <b>Tổng tiền: {Number(numBuy * location.state.price).toLocaleString()}đ</b>
+                    <b>Tổng tiền: {Number(numBuy * productDetail.price).toLocaleString()}đ</b>
                     <br />
                     <div className="actions">
                         <button className="btn btn-add" onClick={() => { addTCart(); }}>Thêm vào giỏ hàng</button>
@@ -94,7 +117,7 @@ const ProductDetail = (props) => {
             </div>
             <div className="description-context container">
                 <p className="text-description">Mô tả Sản Phẩm</p>
-                <p className="description">{location.state.description}</p>
+                <p className="description">{productDetail.description}</p>
             </div>
         </>
     )
