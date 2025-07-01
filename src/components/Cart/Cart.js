@@ -208,7 +208,7 @@ const Cart = () => {
                             <td colSpan={4}></td>
                             <td colSpan={2}>
                                 <span>
-                                    Tổng cộng ({numberProducts} sản phẩm): <strong>{totalPrice} ₫</strong>
+                                    Tổng cộng ({numberProducts} sản phẩm): <strong>{Number(totalPrice).toLocaleString()} ₫</strong>
                                 </span>
                             </td>
                             <td>

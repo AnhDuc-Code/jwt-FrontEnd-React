@@ -15,8 +15,11 @@ const getGuestOrdersService = async (page) => {
     return await axios.get(`api/order/guest?page=${page}`);
 }
 
+const updateStateService = async (item) => {
+    return await axios.put("api/order/update/state", item);
+}
 
 export {
     addToCart, getOrdersService, deleteOrderService,
-    getGuestOrdersService
+    getGuestOrdersService, updateStateService
 }

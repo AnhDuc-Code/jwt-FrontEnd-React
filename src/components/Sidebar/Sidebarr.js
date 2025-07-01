@@ -16,13 +16,13 @@ const milksidebar = (props) => {
                     <span className="candyMilk" onClick={() => { props.setFilterMilk("Bánh kẹo sữa"); }}>Bánh/Kẹo Sữa</span>
                 </nav>
 
-                <h3>ĐÁNH GIÁ</h3>
+                {/* <h3>ĐÁNH GIÁ</h3>
                 <nav className="filter-rating">
                     <span onClick={() => fiveStar()}>★★★★★</span>
                     <span >★★★★☆</span>
                     <span >★★★☆☆</span>
                     <span >★★☆☆☆</span>
-                </nav>
+                </nav> */}
             </aside>
         </>
     )

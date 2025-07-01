@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getOrdersService, deleteOrderService, getGuestOrdersService } from "../../ServiceAxios/orderService";
+import { getOrdersService, deleteOrderService, getGuestOrdersService, updateStateService } from "../../ServiceAxios/orderService";
 import "./Order.scss"
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
@@ -14,7 +14,31 @@ const GuestOrder = () => {
     const [action, setAction] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [dataItem, setDataItem] = useState({});
-    const [dataUpdate, setDataUpdate] = useState({});
+
+    const defaultData = {
+        Product: {
+            image: "",
+            title: "",
+            price: "",
+            catogory: "",
+            brand: ""
+        },
+        Store: {
+            idStore: "",
+            storeName: ""
+        },
+        User: {
+            idUser: "",
+            username: ""
+        },
+        idOrder: "",
+        idProduct: "",
+        idStore: "",
+        idUser: "",
+        numBuy: "",
+        state: ""
+    }
+    const [dataUpdate, setDataUpdate] = useState(defaultData);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
     // const [role,setRole]=useState("");
     const [state, setState] = useState("");
@@ -22,6 +46,7 @@ const GuestOrder = () => {
         setShowModal(false);
         setDataItem({});
         setShowModalUpdate("");
+        setState("");
     }
 
     useEffect(() => {
@@ -63,15 +88,16 @@ const GuestOrder = () => {
             // if (checkConfirm) {
             //     return;
             // }
-            // let response = await editUserWithId(dataUpdateUser);
-            // console.log("check responce", response);
-            // if (response && response.EC === 0) {
-            //     toast.success(response.EM);
-            //     handleClose();
-            //     getUsers();
-            // } else {
-            //     toast.error(response.EM);
-            // }
+
+            let response = await updateStateService(dataUpdate);
+            console.log("check responce", response);
+            if (response && response.EC === 0) {
+                toast.success(response.EM);
+                handleClose();
+                getOrders();
+            } else {
+                toast.error(response.EM);
+            }
         } catch (error) {
             console.log('lỗi React Edit Function', error)
         }
@@ -126,7 +152,10 @@ const GuestOrder = () => {
     }
 
     const handleOnchangeState = async (ob) => {
-        await setState(ob)
+        await setState(ob);
+        setDataUpdate((prev) => ({
+            ...prev, state: ob
+        }))
         // if (action === "CREATE") {
         // await setState({ ...state, ...ob })
         // } else {
@@ -187,16 +216,21 @@ const GuestOrder = () => {
                                                 }} /></td>
                                                 <td className="product-name" >{item.Product.title}</td>
                                                 <td >{item.numBuy}</td>
-                                                <td >{item.Product.price}</td>
-                                                <td >{item.totalPrice}</td>
+                                                <td >{Number(item.Product.price).toLocaleString()}đ</td>
+                                                <td >{Number(item.totalPrice).toLocaleString()}đ</td>
                                                 <td >{item.state}</td>
                                                 <td >
-                                                    <button className="bfix btn btn-warning bi-pencil-square me-2" onClick={() => {
-                                                        setShowModalUpdate(true);
-                                                        // setAction("UPDATE");
-                                                        setDataUpdate(item);
-                                                    }}>  Duyệt</button>
-                                                    <button className="bdel btn btn-danger bi-trash" onClick={() => deleteOrder({ item })}>  Xóa</button>
+                                                    <div>
+
+                                                        <button className="bfix btn btn-warning mb-3" style={{ width: "80px" }} onClick={() => {
+                                                            setShowModalUpdate(true);
+                                                            // setAction("UPDATE");
+                                                            setState(item.state);
+                                                            setDataUpdate(item);
+                                                        }}>  Duyệt</button>
+                                                    </div>
+                                                    <div><button className="bdel btn btn-danger bi-trash" style={{ width: "80px" }} onClick={() => deleteOrder({ item })}>  Xóa</button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         )
@@ -234,6 +268,7 @@ const GuestOrder = () => {
                 handleOnchangeState={handleOnchangeState}
                 dataUpdate={dataUpdate}
                 handleEditState={handleEditState}
+                state={state}
             // showModalCreate={showModalCreate}
             />
         </>

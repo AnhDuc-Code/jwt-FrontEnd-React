@@ -166,8 +166,8 @@ const Order = () => {
                                                 }} /></td>
                                                 <td className="product-name" >{item.Product.title}</td>
                                                 <td >{item.numBuy}</td>
-                                                <td >{item.Product.price}</td>
-                                                <td >{item.totalPrice}</td>
+                                                <td >{Number(item.Product.price).toLocaleString()}đ</td>
+                                                <td >{Number(item.totalPrice).toLocaleString()}đ</td>
                                                 <td >{item.state}</td>
                                                 <td >
                                                     {/* <button className="bfix btn btn-warning bi-pencil-square me-2" onClick={() => {
