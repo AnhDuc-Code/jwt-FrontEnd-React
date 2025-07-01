@@ -1,0 +1,55 @@
+// .address-text {
+//     display: -webkit-box;
+//     -webkit-line-clamp: 2;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: normal;
+//     overflow-wrap: anywhere;
+// }
+
+table {
+
+    tbody {
+        tr {
+            .address-text {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+        }
+    }
+
+    tfoot {
+        tr {
+            td {
+                border: 0 !important;
+
+            }
+        }
+    }
+}
+
+.modalUser {
+    .modal-body {
+        .red {
+            color: red;
+        }
+    }
+}
+
+.badd,
+.bfix,
+.bdel {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-1px);
+        /* nổi lên nhẹ */
+    }
+}

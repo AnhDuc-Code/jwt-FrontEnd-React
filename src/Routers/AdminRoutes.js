@@ -14,6 +14,8 @@ import Seller from "../components/Seller/Seller";
 import Cart from "../components/Cart/Cart";
 import Bill from "../components/History/Bill";
 import Personal from "../components/Personal/Personal";
+import Order from "../components/Order/Order";
+import GuestOrder from "../components/Order/GuestOrder";
 
 
 const router = createBrowserRouter([
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
                     {
                         path: "orderHistory",
                         element: <Bill />
+                    },
+                    {
+                        path: "order",
+                        element: <Order />
+                    },
+                    {
+                        path: "guestOrder",
+                        element: <GuestOrder />
                     },
                 ]
             },

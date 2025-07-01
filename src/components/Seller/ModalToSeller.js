@@ -23,7 +23,7 @@ const ModalToSeller = (props) => {
                                 onChange={props.onchangeDataToSeller} />
                         </div>
                         <div className='form-group col-6'>
-                            <label className={''}>Tên cửa hàng(<span className='red'>*</span>)</label>
+                            <label className={''}>Địa chỉ(<span className='red'>*</span>)</label>
                             <input className="form-control" type="text" name='addressStore'
                                 onChange={props.onchangeDataToSeller} />
                         </div>

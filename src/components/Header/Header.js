@@ -52,6 +52,8 @@ const Home = (props) => {
                                     <NavLink to="admin" className='nav-link'>Admin</NavLink>
                                     <NavLink to="user" className='nav-link'>QL Người dùng</NavLink>
                                     <NavLink to="seller" className='nav-link'>Cửa hàng của bạn</NavLink>
+                                    <NavLink to="guestOrder" className='nav-link'>Quản lý đơn Khách</NavLink>
+                                    <NavLink to="order" className='nav-link'>Quản lý đơn hàng cá nhân</NavLink>
                                 </Nav>
 
                                 {/* Giỏ hàng bên phải */}
